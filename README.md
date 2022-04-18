@@ -11,4 +11,5 @@ Lista de artefatos utilizados:
 6. MySQL para persitência em ambiente de produção;
 7. MariaBD e H2 para desenvolvimento e testes;
 8. Firebase Storage para armazenamento de imagens/arquivos;
-9. JUnit para testes unitários.
+9. JUnit para testes unitários;
+10. Heroku para deploy do ambiente de produção.
