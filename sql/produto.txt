@@ -1,0 +1,15 @@
+CREATE TABLE produto
+(id bigint not null auto_increment,
+ nome varchar(255),
+ descricao varchar(255),
+ valor decimal(10,2),
+ estoque int(11),
+ situacao boolean,
+ primary key (id) );
+
+INSERT INTO produto (id, nome, valor, descricao, situacao, estoque) VALUES
+(1, 'Café', 12.90, 'Café em pó tradicional Igaçu lata 400g', 1, 100),
+(2, 'Erva Mate', 13.90, 'Erva Mate Pura Folha 1kg', 1, 100),
+(3, 'Chá Preto', 3.90, 'Prenda', 1, 100),
+(4, 'Arroz', 16.90, 'Arroz Camil branco polido tipo 1 pacote 5kg', 1, 100),
+(5, 'Feijão', 6.90, 'Feijão Tordilho pacote 1kg', 0, 100);
