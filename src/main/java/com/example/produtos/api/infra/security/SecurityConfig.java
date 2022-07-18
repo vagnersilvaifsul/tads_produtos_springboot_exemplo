@@ -20,7 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true) //habilita a Security por método no(s) controller(s)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

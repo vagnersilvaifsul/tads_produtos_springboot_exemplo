@@ -37,7 +37,7 @@ public class ProdutoController {
     }
 
     @PostMapping
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity<String> insert(@RequestBody Produto produto){
         ProdutoDTO p = service.insert(produto);
         URI location = getUri(p.getId());
