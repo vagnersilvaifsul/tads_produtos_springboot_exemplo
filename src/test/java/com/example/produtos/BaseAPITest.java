@@ -54,6 +54,13 @@ public abstract class BaseAPITest {
         return rest.exchange(url, POST, new HttpEntity<>(body, headers), responseType);
     }
 
+    //metodo genérico para o verbo PUT
+    <T> ResponseEntity<T> put(String url, Object body, Class<T> responseType) {
+        HttpHeaders headers = getHeaders();
+
+        return rest.exchange(url, PUT, new HttpEntity<>(body, headers), responseType);
+    }
+
     //metodo genérico para o verbo GET
     <T> ResponseEntity<T> get(String url, Class<T> responseType) {
 
