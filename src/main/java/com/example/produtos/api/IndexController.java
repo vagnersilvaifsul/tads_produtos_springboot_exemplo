@@ -17,7 +17,7 @@ public class IndexController {
     }
 
     //UserDetails representa o usuário logado na sessão
-    @GetMapping("/userInfo")
+    @GetMapping("/user/userInfo")
     public UserDetails userInfo(@AuthenticationPrincipal UserDetails user) {
         return user;
     }
