@@ -20,14 +20,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userRep.findByLogin(username);
     }
 
-    //Implementação para fornecer os users em memória
+//    //Implementação para fornecer os users em memória
 //    @Override
 //    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //        if(username.equals("user")){
-//            return User.withUsername(username).password(encoder.encode("user")).roles("USER").build();
+//            return User.withUsername(username).password(encoder.encode("123")).roles("USER").build();
 //        }else if(username.equals("admin")){
-//            return User.withUsername(username).password(encoder.encode("admin")).roles("USER", "ADMIN").build();
+//            return User.withUsername(username).password(encoder.encode("123")).roles("USER", "ADMIN").build();
 //        }
 //        throw new UsernameNotFoundException("Usuario inexistente.");
 //    }
@@ -37,4 +37,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.encode("123"));
     }
+
 }
