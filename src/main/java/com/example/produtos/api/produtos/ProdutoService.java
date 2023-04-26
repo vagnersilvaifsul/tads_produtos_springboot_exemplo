@@ -25,7 +25,7 @@ public class ProdutoService {
     }
 
     public List<ProdutoDTO> getProdutosByNome(String nome) {
-        return rep.findByNome(nome).stream().map(ProdutoDTO::create).collect(Collectors.toList());
+        return rep.findByNome(nome+"%").stream().map(ProdutoDTO::create).collect(Collectors.toList());
     }
 
     public ProdutoDTO insert(Produto produto) {
