@@ -13,3 +13,8 @@ Lista de artefatos utilizados:
 8. Firebase Storage para armazenamento de imagens/arquivos;
 9. JUnit para testes unitários;
 10. Heroku para deploy do ambiente de produção.
+
+Para executar o projeto no Heroku Local (como parte de um teste de integração), siga esses passos:
+1. Baixe e instale o Heroku CLI, link: https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
+2. Abra um terminal na pasta raiz do projeto;
+3. Execute o seguinte comando: heroku local -p 8080 -f ./proc_local/Procfile (-p é a porta do servidor e -f o local do Procfile que você utilizará para essa execução)
