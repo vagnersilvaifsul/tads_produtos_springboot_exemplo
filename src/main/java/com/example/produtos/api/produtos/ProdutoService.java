@@ -41,12 +41,13 @@ public class ProdutoService {
         Optional<Produto> optional = rep.findById(id);
         if(optional.isPresent()) {
             Produto db = optional.get();
-            // Copiar as propriedades
+            // Copia as propriedades
             db.setNome(produto.getNome());
+            db.setValorDeCompra(produto.getValorDeCompra());
+            db.setValorDeVenda(produto.getValorDeVenda());
             db.setDescricao(produto.getDescricao());
-            db.setValor(produto.getValor());
-            db.setEstoque(produto.getEstoque());
             db.setSituacao(produto.getSituacao());
+            db.setQuantidade(produto.getQuantidade());
             System.out.println("Produto id " + db.getId());
 
             // Atualiza o produto
