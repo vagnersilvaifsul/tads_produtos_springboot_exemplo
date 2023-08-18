@@ -29,8 +29,10 @@ public class ProdutoController {
     @GetMapping("{id}")
     @ApiOperation(value = "Retorna um produto pelo campo identificador.")
     public ResponseEntity<ProdutoDTO> selectById(@PathVariable("id") Long id) {
-        ProdutoDTO produto = service.getProdutoById(id);
-        return ResponseEntity.ok(produto);
+        ProdutoDTO p = service.getProdutoById(id);
+        return p != null ?
+            ResponseEntity.ok(p) :
+            ResponseEntity.notFound().build();
     }
 
     @GetMapping("/nome/{nome}")

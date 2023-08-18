@@ -1,6 +1,5 @@
 package com.example.produtos.api.produtos;
 
-import com.example.produtos.api.infra.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -21,7 +20,7 @@ public class ProdutoService {
 
     public ProdutoDTO getProdutoById(Long id) {
         Optional<Produto> produto = rep.findById(id);
-        return produto.map(ProdutoDTO::create).orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado"));
+        return produto.map(ProdutoDTO::create).orElse(null);
     }
 
     public List<ProdutoDTO> getProdutosByNome(String nome) {
