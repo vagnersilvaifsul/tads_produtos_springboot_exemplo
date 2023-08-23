@@ -29,8 +29,10 @@ public class ProdutoController {
     @GetMapping("{id}")
     @ApiOperation(value = "Retorna um produto pelo campo identificador.")
     public ResponseEntity<ProdutoDTO> selectById(@PathVariable("id") Long id) {
-        ProdutoDTO produto = service.getProdutoById(id);
-        return ResponseEntity.ok(produto);
+        ProdutoDTO p = service.getProdutoById(id);
+        return p != null ?
+            ResponseEntity.ok(p) :
+            ResponseEntity.notFound().build();
     }
 
     @GetMapping("/nome/{nome}")
@@ -64,8 +66,9 @@ public class ProdutoController {
     @DeleteMapping("{id}")
     @ApiOperation(value = "Deleta um produto.")
     public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        service.delete(id);
-        return ResponseEntity.ok().build();
+        return service.delete(id) ?
+            ResponseEntity.ok().build() :
+            ResponseEntity.notFound().build();
     }
 
     //utilitário

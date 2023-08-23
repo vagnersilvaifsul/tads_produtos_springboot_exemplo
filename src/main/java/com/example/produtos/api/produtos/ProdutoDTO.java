@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 public class ProdutoDTO {
     private Long id;
     private String nome;
+    private BigDecimal valorDeVenda;
     private String descricao;
-    private BigDecimal valor;
-    private Long estoque;
     private Boolean situacao;
+    private Integer quantidade;
 
     public static ProdutoDTO create(Produto p){
         ModelMapper modelMapper = new ModelMapper();
