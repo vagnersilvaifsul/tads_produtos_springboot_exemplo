@@ -59,7 +59,13 @@ public class ProdutoService {
         }
     }
 
-    public void delete(Long id) {
-        rep.deleteById(id);
+    public boolean delete(Long id) {
+        Optional<Produto> optional = rep.findById(id);
+        if(optional.isPresent()) {
+            rep.deleteById(id);
+            return true;
+        }else {
+            return false;
+        }
     }
 }

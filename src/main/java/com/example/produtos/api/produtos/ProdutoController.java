@@ -66,8 +66,9 @@ public class ProdutoController {
     @DeleteMapping("{id}")
     @ApiOperation(value = "Deleta um produto.")
     public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        service.delete(id);
-        return ResponseEntity.ok().build();
+        return service.delete(id) ?
+            ResponseEntity.ok().build() :
+            ResponseEntity.notFound().build();
     }
 
     //utilitário
