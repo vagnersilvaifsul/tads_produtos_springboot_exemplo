@@ -12,7 +12,7 @@ public class ProdutoDTO {
     private BigDecimal valorDeVenda;
     private String descricao;
     private Boolean situacao;
-    private Integer quantidade;
+    private Integer estoque;
 
     public static ProdutoDTO create(Produto p){
         ModelMapper modelMapper = new ModelMapper();

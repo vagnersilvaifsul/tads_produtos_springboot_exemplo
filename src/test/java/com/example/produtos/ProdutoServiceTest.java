@@ -49,8 +49,9 @@ public class ProdutoServiceTest {
         Produto produto = new Produto();
         produto.setNome("Teste");
         produto.setDescricao("Desc. do produto Teste");
-        produto.setValor(new BigDecimal("10.00"));
-        produto.setEstoque(100L);
+        produto.setValorDeCompra(new BigDecimal("5.00"));
+        produto.setValorDeVenda(new BigDecimal("10.00"));
+        produto.setEstoque(100);
         produto.setSituacao(true);
 
         //insere o produto na base da dados
@@ -68,18 +69,16 @@ public class ProdutoServiceTest {
         //compara os valores inseridos com os valores pesquisados para confirmar
         assertEquals("Teste", p.getNome());
         assertEquals("Desc. do produto Teste", p.getDescricao());
-        assertEquals(new BigDecimal("10.00"), p.getValor());
-        assertEquals(Long.valueOf(100), p.getEstoque());
+        assertEquals(new BigDecimal("10.00"), p.getValorDeVenda());
+        assertEquals(Integer.valueOf(100), p.getEstoque());
         assertEquals(Boolean.TRUE, p.getSituacao());
 
         // Deletar o objeto
         service.delete(id);
         //Verificar se deletou
-        try {
-            service.getProdutoById(id);
+        //Verificar se deletou
+        if(service.getProdutoById(id) != null){
             fail("O produto não foi excluído");
-        } catch (ObjectNotFoundException e) {
-            // OK
         }
     }
 
@@ -89,6 +88,7 @@ public class ProdutoServiceTest {
         String nome = pDTO.getNome(); //armazena o valor original para voltar na base
         pDTO.setNome("Café modificado");
         Produto p = Produto.create(pDTO);
+        p.setValorDeCompra(new BigDecimal("5.00"));
 
         pDTO = service.update(p, p.getId());
         assertNotNull(pDTO);
@@ -106,8 +106,9 @@ public class ProdutoServiceTest {
         Produto produto = new Produto();
         produto.setNome("Teste");
         produto.setDescricao("Desc. do produto Teste");
-        produto.setValor(new BigDecimal("1.00"));
-        produto.setEstoque(1L);
+        produto.setValorDeCompra(new BigDecimal("5.00"));
+        produto.setValorDeVenda(new BigDecimal("10.00"));
+        produto.setEstoque(100);
         produto.setSituacao(true);
 
         //insere o produto na base da dados
@@ -125,11 +126,8 @@ public class ProdutoServiceTest {
         // Deletar o objeto
         service.delete(id);
         //Verificar se deletou
-        try {
-            service.getProdutoById(id);
+        if(service.getProdutoById(id) != null){
             fail("O produto não foi excluído");
-        } catch (ObjectNotFoundException e) {
-            // OK
         }
     }
 }
