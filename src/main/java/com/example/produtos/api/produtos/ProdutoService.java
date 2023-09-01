@@ -46,7 +46,7 @@ public class ProdutoService {
             db.setValorDeVenda(produto.getValorDeVenda());
             db.setDescricao(produto.getDescricao());
             db.setSituacao(produto.getSituacao());
-            db.setQuantidade(produto.getQuantidade());
+            db.setEstoque(produto.getEstoque());
             System.out.println("Produto id " + db.getId());
 
             // Atualiza o produto

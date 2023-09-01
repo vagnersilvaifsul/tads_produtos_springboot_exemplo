@@ -36,7 +36,7 @@ public class Produto {
     private Boolean situacao;
     @NotNull
     @Min(0)
-    private Integer quantidade;
+    private Integer estoque;
     @OneToMany(mappedBy = "produto")
     private Collection<Item> items;
 
