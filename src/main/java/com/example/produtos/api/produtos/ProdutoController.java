@@ -8,6 +8,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class ProdutoController {
     @PostMapping
     @Secured({"ROLE_ADMIN"})
     @ApiOperation(value = "Insere um novo produto.")
-    public ResponseEntity<String> insert(@RequestBody Produto produto){
+    public ResponseEntity<String> insert(@Valid @RequestBody Produto produto){
         ProdutoDTO p = service.insert(produto);
         URI location = getUri(p.getId());
         return ResponseEntity.created(location).build();

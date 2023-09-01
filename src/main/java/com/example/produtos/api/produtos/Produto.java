@@ -5,8 +5,14 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Collection;
+
+/*
+    O Validation vai depender dos requisitos do sistema. A implementação realizada aqui é uma demonstração
+    de sua aplicação.
+ */
 
 @Entity(name = "produtos")
 @Data
@@ -14,11 +20,22 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+    @NotBlank(message = "O nome não pode ser nulo ou vazio") //verifica se está vazio e estabelece como obrigatório (não pode ser nulo)
+    @Size(min = 2, max = 50, message = "Tamanho mínimo de 2 e máximo de 200")
     private String nome;
+    @NotNull
+    @Min(0)
     private BigDecimal valorDeCompra;
+    @NotNull
+    @Min(0)
     private BigDecimal valorDeVenda;
+    @NotBlank(message = "A descrição não pode ser nula ou vazio") //verifica se está vazio e estabelece como obrigatório (não pode ser nulo)
+    @Size(min = 2, max = 255, message = "Tamanho mínimo de 2 e máximo de 255")
     private String descricao;
-    private Byte situacao;
+    @NotNull
+    private Boolean situacao;
+    @NotNull
+    @Min(0)
     private Integer quantidade;
     @OneToMany(mappedBy = "produto")
     private Collection<Item> items;
