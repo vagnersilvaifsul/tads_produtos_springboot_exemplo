@@ -56,7 +56,7 @@ public class ProdutoController {
 
     @PutMapping("{id}")
     @ApiOperation(value = "Altera um produto existente.")
-    public ResponseEntity<ProdutoDTO> update(@PathVariable("id") Long id, @RequestBody Produto produto){
+    public ResponseEntity<ProdutoDTO> update(@PathVariable("id") Long id, @Valid @RequestBody Produto produto){
         produto.setId(id);
         ProdutoDTO p = service.update(produto, id);
         return p != null ?
