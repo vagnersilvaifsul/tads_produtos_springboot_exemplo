@@ -50,11 +50,10 @@ public class SecurityConfig {
         final AuthenticationManager authManager = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
 
         http
-            .authorizeRequests()//Qualquer request requer autenticação
-                .antMatchers(HttpMethod.POST, "/api/v1/login").permitAll() //porém, esse path é exceção
-                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
-                .permitAll()
-                .anyRequest().authenticated() //qualquer requeste deve ser autenticada
+            .authorizeRequests()//Quais rotas requerem autenticação
+                .antMatchers(HttpMethod.POST, "/api/v1/login").permitAll() //esse path é exceção, não requer autenticação
+                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()//e esse também
+                .anyRequest().authenticated() //as demais rotas requerem autenticação
             .and()
                 .csrf().disable() //desabilita o controle de ataques CSRF
                 .addFilter(new JwtAuthenticationFilter(authManager)) //filtro de autenticação do JWT
@@ -63,7 +62,7 @@ public class SecurityConfig {
                 .accessDeniedHandler(accessDeniedHandler) //handler de acesso negado
                 .authenticationEntryPoint(unauthorizedHandler) //handler de autorização negada
             .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //desliga os cookies da sessão
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //desliga os cookies da sessão. A torna Stateless.
 
 
 //        //Basic Authentication
