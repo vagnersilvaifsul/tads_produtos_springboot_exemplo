@@ -48,7 +48,7 @@ public class ProdutoController {
     @PostMapping
     @Secured({"ROLE_ADMIN"})
     @ApiOperation(value = "Insere um novo produto.")
-    public ResponseEntity<String> insert(@Valid @RequestBody Produto produto){
+    public ResponseEntity<String> insert(@RequestBody Produto produto){
         ProdutoDTO p = service.insert(produto);
         URI location = getUri(p.getId());
         return ResponseEntity.created(location).build();
