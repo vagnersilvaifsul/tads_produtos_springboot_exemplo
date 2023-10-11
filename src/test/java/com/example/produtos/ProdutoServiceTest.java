@@ -7,7 +7,9 @@ import com.example.produtos.api.produtos.ProdutoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
@@ -17,6 +19,8 @@ import static junit.framework.TestCase.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //Não substitua pelo banco de dados em memória
+//@ActiveProfiles("test") //qual o profile ele deve utilizar para passar os testes
 public class ProdutoServiceTest {
 
     @Autowired
