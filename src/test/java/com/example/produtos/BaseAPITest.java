@@ -26,7 +26,7 @@ public abstract class BaseAPITest {
 
     private String jwtToken = "";
 
-    //Método utilitário para formatar o header da requisição
+    //Método utilitário para montar o header da requisição
     HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
