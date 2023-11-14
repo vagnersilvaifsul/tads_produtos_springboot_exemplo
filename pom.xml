@@ -151,6 +151,7 @@
 
     </dependencies>
 
+    <!-- Firebase Admin (para localizar a dependência do Firebase Admin -->
     <repositories>
         <repository>
             <id>spring-repo</id>
