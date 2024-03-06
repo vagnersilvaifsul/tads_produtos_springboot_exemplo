@@ -1,14 +1,12 @@
 package com.example.produtos.api.cliente;
 
 import com.example.produtos.api.pedido.Pedido;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
+@Entity(name="Cliente")
 @Table(name = "clientes")
 @Data
 @NoArgsConstructor

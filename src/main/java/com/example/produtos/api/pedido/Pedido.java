@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Collection;
 
-@Entity
+@Entity(name = "Pedido")
 @Table(name = "pedidos")
 @Data
 @NoArgsConstructor

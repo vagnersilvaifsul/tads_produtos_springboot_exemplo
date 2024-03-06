@@ -1,7 +1,7 @@
 package com.example.produtos.api.item;
 
 import com.example.produtos.api.pedido.Pedido;
-import com.example.produtos.api.produtos.Produto;
+import com.example.produtos.api.produto.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
+@Entity(name="Item")
 @Table(name = "itens")
 @Data
 @NoArgsConstructor

@@ -1,15 +1,12 @@
 package com.example.produtos;
 
-import com.example.produtos.api.infra.exception.ObjectNotFoundException;
-import com.example.produtos.api.produtos.Produto;
-import com.example.produtos.api.produtos.ProdutoDTO;
-import com.example.produtos.api.produtos.ProdutoService;
+import com.example.produtos.api.produto.Produto;
+import com.example.produtos.api.produto.ProdutoDTO;
+import com.example.produtos.api.produto.ProdutoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;

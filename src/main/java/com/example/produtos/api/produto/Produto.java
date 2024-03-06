@@ -1,7 +1,9 @@
-package com.example.produtos.api.produtos;
+package com.example.produtos.api.produto;
 
 import com.example.produtos.api.item.Item;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
@@ -14,8 +16,11 @@ import java.util.Collection;
     de sua aplicação.
  */
 
-@Entity(name = "produtos")
+@Entity(name = "Produto")
+@Table(name = "produtos")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

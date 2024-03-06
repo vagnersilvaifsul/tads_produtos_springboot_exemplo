@@ -1,8 +1,8 @@
 package com.example.produtos;
 
 
-import com.example.produtos.api.produtos.Produto;
-import com.example.produtos.api.produtos.ProdutoDTO;
+import com.example.produtos.api.produto.Produto;
+import com.example.produtos.api.produto.ProdutoDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

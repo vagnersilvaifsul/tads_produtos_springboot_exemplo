@@ -1,4 +1,4 @@
-package com.example.produtos.api.produtos;
+package com.example.produtos.api.produto;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

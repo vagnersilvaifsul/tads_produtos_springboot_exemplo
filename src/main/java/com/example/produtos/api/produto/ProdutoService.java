@@ -1,4 +1,4 @@
-package com.example.produtos.api.produtos;
+package com.example.produtos.api.produto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

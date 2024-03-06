@@ -1,4 +1,4 @@
-package com.example.produtos.api.produtos;
+package com.example.produtos.api.produto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
