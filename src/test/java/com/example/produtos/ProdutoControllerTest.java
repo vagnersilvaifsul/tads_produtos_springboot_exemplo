@@ -27,7 +27,7 @@ public class ProdutoControllerTest extends BaseAPITest {
     }
 
     private ResponseEntity<List<ProdutoDTOResponse>> getProdutos(String url) {
-        HttpHeaders headers = getHeaders();
+        var headers = getHeaders();
 
         return rest.exchange(
             url,
@@ -39,7 +39,7 @@ public class ProdutoControllerTest extends BaseAPITest {
 
     @Test
     public void selectAll() {
-        List<ProdutoDTOResponse> produtos = getProdutos("/api/v1/produtos").getBody();
+        var produtos = getProdutos("/api/v1/produtos").getBody();
         assertNotNull(produtos);
         assertEquals(5, produtos.size());
 
@@ -60,19 +60,16 @@ public class ProdutoControllerTest extends BaseAPITest {
 
     @Test
     public void selectById() {
-
         assertNotNull(getProduto("/api/v1/produtos/1"));
         assertNotNull(getProduto("/api/v1/produtos/2"));
         assertNotNull(getProduto("/api/v1/produtos/3"));
-
         assertEquals(HttpStatus.NOT_FOUND, getProduto("/api/v1/produtos/1000").getStatusCode());
     }
 
     @Test
     public void testInsert() {
-
         //cria o produto para teste
-        Produto produto = new Produto();
+        var produto = new Produto();
         produto.setNome("Teste");
         produto.setDescricao("Desc. do produto Teste");
         produto.setValorDeCompra(new BigDecimal("5.00"));
@@ -80,32 +77,32 @@ public class ProdutoControllerTest extends BaseAPITest {
         produto.setEstoque(100);
         produto.setSituacao(true);
 
-        // Insert
-        ResponseEntity response = post("/api/v1/produtos", produto, null);
+        //Insert
+        var response = post("/api/v1/produtos", produto, null);
         System.out.println(response);
 
-        // Verifica se criou
+        //Verifica se criou
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
-        // Busca o objeto
-        String location = response.getHeaders().get("location").get(0);
+        //Busca o objeto
+        var location = response.getHeaders().get("location").get(0);
         ProdutoDTOResponse p = getProduto(location).getBody();
 
         assertNotNull(p);
         assertEquals("Teste", p.getNome());
         assertEquals(Integer.valueOf(100), p.getEstoque());
 
-        // Deleta o objeto
+        //Deleta o objeto
         delete(location, null);
 
-        // Verificar se deletou
+        //Verifica se deletou
         assertEquals(HttpStatus.NOT_FOUND, getProduto(location).getStatusCode());
     }
 
     @Test
     public void testUpdate() {
         //cria o produto para teste
-        Produto produto = new Produto();
+        var produto = new Produto();
         produto.setNome("Teste");
         produto.setDescricao("Desc. do produto Teste");
         produto.setValorDeCompra(new BigDecimal("5.00"));
@@ -113,15 +110,15 @@ public class ProdutoControllerTest extends BaseAPITest {
         produto.setEstoque(100);
         produto.setSituacao(true);
 
-        // Insert
-        ResponseEntity response = post("/api/v1/produtos", produto, null);
+        //Insert
+        var response = post("/api/v1/produtos", produto, null);
         System.out.println(response);
 
-        // Verifica se criou
+        //Verifica se criou
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
-        // Busca o objeto
-        String location = response.getHeaders().get("location").get(0);
+        //Busca o objeto
+        var location = response.getHeaders().get("location").get(0);
         ProdutoDTOResponse p = getProduto(location).getBody();
 
         assertNotNull(p);
@@ -129,18 +126,18 @@ public class ProdutoControllerTest extends BaseAPITest {
         assertEquals(Integer.valueOf(100), p.getEstoque());
 
         //depois altera seu valor
-        Produto pa = Produto.create(p);
+        var pa = Produto.create(p);
         pa.setEstoque(500);
 
-        // Update
+        //Update
         response = put("/api/v1/produtos/" + p.getId(), pa, null);
         System.out.println(response);
         assertEquals(Integer.valueOf(500), pa.getEstoque());
 
-        // Deleta o objeto
+        //Deleta o objeto
         delete(location, null);
 
-        // Verifica se deletou
+        //Verifica se deletou
         assertEquals(HttpStatus.NOT_FOUND, getProduto(location).getStatusCode());
 
     }
@@ -152,7 +149,7 @@ public class ProdutoControllerTest extends BaseAPITest {
 
     @Test
     public void testGetNotFound() {
-        ResponseEntity response = getProduto("/api/v1/produtos/1100");
+        var response = getProduto("/api/v1/produtos/1100");
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 }
