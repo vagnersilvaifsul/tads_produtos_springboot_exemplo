@@ -46,10 +46,9 @@ public class ProdutoService {
             db.setSituacao(produto.getSituacao());
             db.setEstoque(produto.getEstoque());
             return ProdutoDTOResponse.create(rep.save(db));
-        } else {
-            return null;
-            //throw new RuntimeException("Não foi possível atualizar o registro");
         }
+        return null;
+
     }
 
     public boolean delete(Long id) {
