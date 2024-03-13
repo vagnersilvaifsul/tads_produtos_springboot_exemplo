@@ -1,7 +1,6 @@
 package com.example.produtos;
 
 import com.example.produtos.api.produto.Produto;
-import com.example.produtos.api.produto.ProdutoDTO;
 import com.example.produtos.api.produto.ProdutoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static junit.framework.TestCase.*;
 
@@ -25,15 +23,15 @@ public class ProdutoServiceTest {
 
     @Test
     public void testGetProdutos() {
-        List<ProdutoDTO> produtos = service.getProdutos();
+        var produtos = service.getProdutos();
         assertEquals(5, produtos.size());
     }
 
     @Test
     public void testGetProdutoById(){
-        ProdutoDTO p = service.getProdutoById(1L);
+        var p = service.getProdutoById(1L);
         assertNotNull(p);
-        assertEquals("Café", p.getNome());
+        assertEquals("Café", p.get().getNome());
     }
 
     @Test
@@ -47,7 +45,7 @@ public class ProdutoServiceTest {
     public void testInsert() {
 
         //cria o produto para teste
-        Produto produto = new Produto();
+        var produto = new Produto();
         produto.setNome("Teste");
         produto.setDescricao("Desc. do produto Teste");
         produto.setValorDeCompra(new BigDecimal("5.00"));
@@ -56,7 +54,7 @@ public class ProdutoServiceTest {
         produto.setSituacao(true);
 
         //insere o produto na base da dados
-        ProdutoDTO p = service.insert(produto);
+        var p = service.insert(produto);
 
         //se inseriu
         assertNotNull(p);
@@ -64,7 +62,7 @@ public class ProdutoServiceTest {
         //confirma se o produto foi realmente inserido na base de dados
         Long id = p.getId();
         assertNotNull(id);
-        p = service.getProdutoById(id);
+        p = service.getProdutoById(id).get();
         assertNotNull(p);
 
         //compara os valores inseridos com os valores pesquisados para confirmar
@@ -74,24 +72,22 @@ public class ProdutoServiceTest {
         assertEquals(Integer.valueOf(100), p.getEstoque());
         assertEquals(Boolean.TRUE, p.getSituacao());
 
-        // Deletar o objeto
+        //Deleta o objeto
         service.delete(id);
-        //Verificar se deletou
-        //Verificar se deletou
-        if(service.getProdutoById(id) != null){
+        //Verifica se deletou
+        if(service.getProdutoById(id).isPresent()){
             fail("O produto não foi excluído");
         }
     }
 
     @Test
     public void TestUpdate(){
-        ProdutoDTO pDTO = service.getProdutoById(1L);
-        String nome = pDTO.getNome(); //armazena o valor original para voltar na base
-        pDTO.setNome("Café modificado");
-        Produto p = Produto.create(pDTO);
+        var p = service.getProdutoById(1L).get();
+        var nome = p.getNome(); //armazena o valor original para voltar na base
+        p.setNome("Café modificado");
         p.setValorDeCompra(new BigDecimal("5.00"));
 
-        pDTO = service.update(p, p.getId());
+        var pDTO = service.update(p, p.getId());
         assertNotNull(pDTO);
         assertEquals("Café modificado", pDTO.getNome());
 
@@ -104,7 +100,7 @@ public class ProdutoServiceTest {
     @Test
     public void testDelete(){
         //cria o produto para teste
-        Produto produto = new Produto();
+        var produto = new Produto();
         produto.setNome("Teste");
         produto.setDescricao("Desc. do produto Teste");
         produto.setValorDeCompra(new BigDecimal("5.00"));
@@ -113,21 +109,21 @@ public class ProdutoServiceTest {
         produto.setSituacao(true);
 
         //insere o produto na base da dados
-        ProdutoDTO p = service.insert(produto);
+        var p = service.insert(produto);
 
-        //se inseriu
+        //verifica se inseriu
         assertNotNull(p);
 
         //confirma se o produto foi realmente inserido na base de dados
         Long id = p.getId();
         assertNotNull(id);
-        p = service.getProdutoById(id);
+        p = service.getProdutoById(id).get();
         assertNotNull(p);
 
-        // Deletar o objeto
+        //Deleta o objeto
         service.delete(id);
-        //Verificar se deletou
-        if(service.getProdutoById(id) != null){
+        //Verifica se deletou
+        if(service.getProdutoById(id).isPresent()){
             fail("O produto não foi excluído");
         }
     }

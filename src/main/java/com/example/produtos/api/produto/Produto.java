@@ -45,8 +45,8 @@ public class Produto {
     @OneToMany(mappedBy = "produto")
     private Collection<Item> items;
 
-    public static Produto create(ProdutoDTO p){
-        ModelMapper modelMapper = new ModelMapper();
+    public static Produto create(ProdutoDTOResponse p){
+        var modelMapper = new ModelMapper();
         return modelMapper.map(p, Produto.class);
     }
 }

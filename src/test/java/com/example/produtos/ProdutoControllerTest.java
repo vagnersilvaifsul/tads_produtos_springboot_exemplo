@@ -2,7 +2,7 @@ package com.example.produtos;
 
 
 import com.example.produtos.api.produto.Produto;
-import com.example.produtos.api.produto.ProdutoDTO;
+import com.example.produtos.api.produto.ProdutoDTOResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,29 +16,30 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
+@SuppressWarnings("ALL")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProdutoControllerTest extends BaseAPITest {
 
     //Métodos utilitários
-    private ResponseEntity<ProdutoDTO> getProduto(String url) {
-        return get(url, ProdutoDTO.class);
+    private ResponseEntity<ProdutoDTOResponse> getProduto(String url) {
+        return get(url, ProdutoDTOResponse.class);
     }
 
-    private ResponseEntity<List<ProdutoDTO>> getProdutos(String url) {
+    private ResponseEntity<List<ProdutoDTOResponse>> getProdutos(String url) {
         HttpHeaders headers = getHeaders();
 
         return rest.exchange(
             url,
             HttpMethod.GET,
             new HttpEntity<>(headers),
-            new ParameterizedTypeReference<List<ProdutoDTO>>() {
+            new ParameterizedTypeReference<>() {
             });
     }
 
     @Test
     public void selectAll() {
-        List<ProdutoDTO> produtos = getProdutos("/api/v1/produtos").getBody();
+        List<ProdutoDTOResponse> produtos = getProdutos("/api/v1/produtos").getBody();
         assertNotNull(produtos);
         assertEquals(5, produtos.size());
 
@@ -88,7 +89,7 @@ public class ProdutoControllerTest extends BaseAPITest {
 
         // Busca o objeto
         String location = response.getHeaders().get("location").get(0);
-        ProdutoDTO p = getProduto(location).getBody();
+        ProdutoDTOResponse p = getProduto(location).getBody();
 
         assertNotNull(p);
         assertEquals("Teste", p.getNome());
@@ -121,7 +122,7 @@ public class ProdutoControllerTest extends BaseAPITest {
 
         // Busca o objeto
         String location = response.getHeaders().get("location").get(0);
-        ProdutoDTO p = getProduto(location).getBody();
+        ProdutoDTOResponse p = getProduto(location).getBody();
 
         assertNotNull(p);
         assertEquals("Teste", p.getNome());

@@ -14,32 +14,30 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository rep;
 
-    public List<ProdutoDTO> getProdutos() {
-        return rep.findAll().stream().map(ProdutoDTO::create).collect(Collectors.toList());
+    public List<ProdutoDTOResponse> getProdutos() {
+        return rep.findAll().stream().map(ProdutoDTOResponse::create).collect(Collectors.toList());
     }
 
-    public ProdutoDTO getProdutoById(Long id) {
-        Optional<Produto> produto = rep.findById(id);
-        return produto.map(ProdutoDTO::create).orElse(null);
+    public Optional<Produto> getProdutoById(Long id) {
+        return rep.findById(id);
     }
 
-    public List<ProdutoDTO> getProdutosByNome(String nome) {
-        return rep.findByNome(nome+"%").stream().map(ProdutoDTO::create).collect(Collectors.toList());
+    public List<ProdutoDTOResponse> getProdutosByNome(String nome) {
+        return rep.findByNome(nome+"%").stream().map(ProdutoDTOResponse::create).collect(Collectors.toList());
     }
 
-    public ProdutoDTO insert(Produto produto) {
+    public Produto insert(Produto produto) {
         Assert.isNull(produto.getId(),"Não foi possível inserir o registro");
-
-        return ProdutoDTO.create(rep.save(produto));
+        return rep.save(produto);
     }
 
-    public ProdutoDTO update(Produto produto, Long id) {
+    public ProdutoDTOResponse update(Produto produto, Long id) {
         Assert.notNull(id,"Não foi possível atualizar o registro");
 
         // Busca o produto no banco de dados
-        Optional<Produto> optional = rep.findById(id);
+        var optional = rep.findById(id);
         if(optional.isPresent()) {
-            Produto db = optional.get();
+            var db = optional.get();
             // Copia as propriedades
             db.setNome(produto.getNome());
             db.setValorDeCompra(produto.getValorDeCompra());
@@ -47,12 +45,7 @@ public class ProdutoService {
             db.setDescricao(produto.getDescricao());
             db.setSituacao(produto.getSituacao());
             db.setEstoque(produto.getEstoque());
-            System.out.println("Produto id " + db.getId());
-
-            // Atualiza o produto
-            rep.save(db);
-
-            return ProdutoDTO.create(db);
+            return ProdutoDTOResponse.create(rep.save(db));
         } else {
             return null;
             //throw new RuntimeException("Não foi possível atualizar o registro");
@@ -60,7 +53,7 @@ public class ProdutoService {
     }
 
     public boolean delete(Long id) {
-        Optional<Produto> optional = rep.findById(id);
+        var optional = rep.findById(id);
         if(optional.isPresent()) {
             rep.deleteById(id);
             return true;

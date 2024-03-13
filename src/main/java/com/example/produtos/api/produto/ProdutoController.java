@@ -22,24 +22,24 @@ public class ProdutoController {
 
     @GetMapping
     @ApiOperation(value = "Retorna todos os produtos cadastrados.")
-    public ResponseEntity<List<ProdutoDTO>> selectAll() {
-        List<ProdutoDTO> produtos = service.getProdutos();
-        return ResponseEntity.ok(produtos);
+    public ResponseEntity<List<ProdutoDTOResponse>> selectAll() {
+        return ResponseEntity.ok(service.getProdutos());
     }
 
     @GetMapping("{id}")
     @ApiOperation(value = "Retorna um produto pelo campo identificador.")
-    public ResponseEntity<ProdutoDTO> selectById(@PathVariable("id") Long id) {
-        ProdutoDTO p = service.getProdutoById(id);
-        return p != null ?
-            ResponseEntity.ok(p) :
-            ResponseEntity.notFound().build();
+    public ResponseEntity<ProdutoDTOResponse> selectById(@PathVariable("id") Long id) {
+        var p = service.getProdutoById(id);
+        if(p.isPresent()){
+            return ResponseEntity.ok(ProdutoDTOResponse.create(p.get()));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/nome/{nome}")
     @ApiOperation(value = "Retorna uma lista de produtos pela chave nome.")
-    public ResponseEntity<List<ProdutoDTO>> selectByNome(@PathVariable("nome") String nome) {
-        List<ProdutoDTO> produtos = service.getProdutosByNome(nome);
+    public ResponseEntity<List<ProdutoDTOResponse>> selectByNome(@PathVariable("nome") String nome) {
+        var produtos = service.getProdutosByNome(nome);
         return produtos.isEmpty() ?
             ResponseEntity.noContent().build() :
             ResponseEntity.ok(produtos);
@@ -48,17 +48,17 @@ public class ProdutoController {
     @PostMapping
     @Secured({"ROLE_ADMIN"})
     @ApiOperation(value = "Insere um novo produto.")
-    public ResponseEntity<String> insert(@RequestBody Produto produto){
-        ProdutoDTO p = service.insert(produto);
-        URI location = getUri(p.getId());
+    public ResponseEntity<URI> insert(@RequestBody Produto produto){
+        var p = service.insert(produto);
+        var location = getUri(p.getId());
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("{id}")
     @ApiOperation(value = "Altera um produto existente.")
-    public ResponseEntity<ProdutoDTO> update(@PathVariable("id") Long id, @Valid @RequestBody Produto produto){
+    public ResponseEntity<ProdutoDTOResponse> update(@PathVariable("id") Long id, @Valid @RequestBody Produto produto){
         produto.setId(id);
-        ProdutoDTO p = service.update(produto, id);
+        var p = service.update(produto, id);
         return p != null ?
             ResponseEntity.ok(p) :
             ResponseEntity.notFound().build();
