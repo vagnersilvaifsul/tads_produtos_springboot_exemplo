@@ -86,7 +86,7 @@ public class ProdutoControllerTest extends BaseAPITest {
 
         //Busca o objeto
         var location = response.getHeaders().get("location").get(0);
-        ProdutoDTOResponse p = getProduto(location).getBody();
+        var p = getProduto(location).getBody();
 
         assertNotNull(p);
         assertEquals("Teste", p.getNome());
