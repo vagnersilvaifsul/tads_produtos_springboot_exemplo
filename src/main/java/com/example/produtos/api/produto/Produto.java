@@ -42,7 +42,7 @@ public class Produto {
     @NotNull
     @Min(0)
     private Integer estoque;
-    @OneToMany(mappedBy = "produto")
+    @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
     private Collection<Item> items;
 
     public static Produto create(ProdutoDTOResponse p){

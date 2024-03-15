@@ -27,7 +27,7 @@ public class Pedido {
     private Date dataModificacao;
     private Byte situacao;
     private BigDecimal totalPedido;
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER)
     private Collection<Item> items;
     @ManyToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "id", nullable = false)

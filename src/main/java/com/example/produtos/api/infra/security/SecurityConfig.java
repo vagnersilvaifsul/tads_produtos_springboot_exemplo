@@ -20,9 +20,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@Configuration //indica para o spring que esta é uma classe de configuração
+@EnableWebSecurity //indica para o spring que esta classe irá personalizar as configurações de segurança
+@EnableGlobalMethodSecurity(securedEnabled = true) //controle de acesso por anotação em métodos
 public class SecurityConfig {
 
     @Autowired

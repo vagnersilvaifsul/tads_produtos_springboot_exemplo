@@ -18,6 +18,6 @@ public class Cliente {
     private String nome;
     private String sobrenome;
     private Byte situacao;
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private Collection<Pedido> pedidos;
 }
