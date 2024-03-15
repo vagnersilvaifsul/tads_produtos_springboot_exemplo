@@ -2,11 +2,11 @@ package com.example.produtos.api.item;
 
 import com.example.produtos.api.pedido.Pedido;
 import com.example.produtos.api.produto.Produto;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity(name="Item")
@@ -15,8 +15,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Item {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal quantidade;
     private BigDecimal totalItem;

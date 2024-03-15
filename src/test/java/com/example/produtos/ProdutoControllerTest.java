@@ -3,21 +3,18 @@ package com.example.produtos;
 
 import com.example.produtos.api.produto.Produto;
 import com.example.produtos.api.produto.ProdutoDTOResponse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SuppressWarnings("ALL")
-@RunWith(SpringRunner.class) //necessário na versão atual do projeto, 2.7.5
 @SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //indica que esta é uma classe de teste para o SB
 public class ProdutoControllerTest extends BaseAPITest {
 

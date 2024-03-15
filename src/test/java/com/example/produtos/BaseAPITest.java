@@ -1,28 +1,28 @@
 package com.example.produtos;
 
-import com.example.produtos.api.infra.security.jwt.JwtUtil;
-import org.junit.Before;
+
+import com.example.produtos.api.infra.security.TokenService;
+import com.example.produtos.api.usuarios.AutenticacaoService;
+import com.example.produtos.api.usuarios.Usuario;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
-import static junit.framework.TestCase.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.HttpMethod.*;
 
 @SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class BaseAPITest {
     @Autowired
     protected TestRestTemplate rest;
-
     @Autowired
-    @Qualifier("userDetailsService")
-    protected UserDetailsService userDetailsService;
+    private AutenticacaoService service;
+    @Autowired
+    private TokenService tokenService;
 
     private String jwtToken = "";
 
@@ -34,14 +34,14 @@ public abstract class BaseAPITest {
     }
 
     //Método para requisitar o token para um user especificado
-    @Before //essa anotação faz com que o método seja executado antes de qualquel requisição
+    @BeforeEach //essa anotação faz com que o método seja executado antes de qualquel requisição
     public void setupTest() {
         // Le usuário
-        UserDetails user = userDetailsService.loadUserByUsername("admin");
+        Usuario user = (Usuario) service.loadUserByUsername("admin");
         assertNotNull(user);
 
         // Gera token
-        jwtToken = JwtUtil.createToken(user);
+        jwtToken = tokenService.geraToken(user);
         System.out.println("jwtToken gerado:");
         System.out.println(jwtToken);
         assertNotNull(jwtToken);

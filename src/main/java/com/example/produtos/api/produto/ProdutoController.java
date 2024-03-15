@@ -1,33 +1,28 @@
 package com.example.produtos.api.produto;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/produtos")
-@Api(value = "Produtos")
 public class ProdutoController {
 
     @Autowired
     private ProdutoService service;
 
     @GetMapping
-    @ApiOperation(value = "Retorna todos os produtos cadastrados.")
     public ResponseEntity<List<ProdutoDTOResponse>> selectAll() {
         return ResponseEntity.ok(service.getProdutos());
     }
 
     @GetMapping("{id}")
-    @ApiOperation(value = "Retorna um produto pelo campo identificador.")
     public ResponseEntity<ProdutoDTOResponse> selectById(@PathVariable("id") Long id) {
         var p = service.getProdutoById(id);
         if(p.isPresent()){
@@ -37,7 +32,6 @@ public class ProdutoController {
     }
 
     @GetMapping("/nome/{nome}")
-    @ApiOperation(value = "Retorna uma lista de produtos pela chave nome.")
     public ResponseEntity<List<ProdutoDTOResponse>> selectByNome(@PathVariable("nome") String nome) {
         var produtos = service.getProdutosByNome(nome);
         return produtos.isEmpty() ?
@@ -47,7 +41,6 @@ public class ProdutoController {
 
     @PostMapping
     @Secured({"ROLE_ADMIN"})
-    @ApiOperation(value = "Insere um novo produto.")
     public ResponseEntity<URI> insert(@RequestBody Produto produto){
         var p = service.insert(produto);
         var location = getUri(p.getId());
@@ -55,7 +48,6 @@ public class ProdutoController {
     }
 
     @PutMapping("{id}")
-    @ApiOperation(value = "Altera um produto existente.")
     public ResponseEntity<ProdutoDTOResponse> update(@PathVariable("id") Long id, @Valid @RequestBody Produto produto){
         produto.setId(id);
         var p = service.update(produto, id);
@@ -65,7 +57,6 @@ public class ProdutoController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation(value = "Deleta um produto.")
     public ResponseEntity<String> delete(@PathVariable("id") Long id){
         return service.delete(id) ?
             ResponseEntity.ok().build() :

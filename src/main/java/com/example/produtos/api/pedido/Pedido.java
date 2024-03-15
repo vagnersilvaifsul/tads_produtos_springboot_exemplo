@@ -3,11 +3,11 @@ package com.example.produtos.api.pedido;
 
 import com.example.produtos.api.cliente.Cliente;
 import com.example.produtos.api.item.Item;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Collection;
@@ -18,8 +18,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pedido {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String pagamento;
     private String estado;

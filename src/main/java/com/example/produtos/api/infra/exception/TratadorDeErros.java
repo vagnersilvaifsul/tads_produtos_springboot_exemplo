@@ -1,13 +1,12 @@
 package com.example.produtos.api.infra.exception;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class TratadorDeErros extends ResponseEntityExceptionHandler {
@@ -15,7 +14,6 @@ public class TratadorDeErros extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity trataErro400(ConstraintViolationException ex){ //400 - Bad Request para Erro de Validação
         var erros = ex.getConstraintViolations();
-        //System.out.println(ex);
         return ResponseEntity.badRequest().body(erros.stream().map(ErroValidation::new).toList());
     }
 

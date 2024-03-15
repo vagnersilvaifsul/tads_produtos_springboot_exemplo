@@ -1,9 +1,9 @@
 package com.example.produtos.api.cliente;
 
 import com.example.produtos.api.pedido.Pedido;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.Collection;
 
 @Entity(name="Cliente")
@@ -12,8 +12,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cliente {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String sobrenome;
