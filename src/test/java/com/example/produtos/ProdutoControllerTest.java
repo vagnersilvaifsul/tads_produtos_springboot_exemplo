@@ -17,8 +17,8 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 @SuppressWarnings("ALL")
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class) //necessário na versão atual do projeto, 2.7.5
+@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //indica que esta é uma classe de teste para o SB
 public class ProdutoControllerTest extends BaseAPITest {
 
     //Métodos utilitários

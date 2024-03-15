@@ -129,6 +129,13 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!-- Para executar JUnit 4 ou 5, assim as versões do Maven mais recentes rodam JUnit4 -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.6.3</version>
+            <scope>test</scope>
+        </dependency>
         <!-- H2 -->
         <dependency>
             <groupId>com.h2database</groupId>

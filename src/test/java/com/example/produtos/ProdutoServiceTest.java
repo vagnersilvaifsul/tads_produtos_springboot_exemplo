@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 
 import static junit.framework.TestCase.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(SpringRunner.class) //necessário na versão atual do projeto, 2.7.5
+@SpringBootTest(classes = ProdutosApplication.class) //indica que esta é uma classe de teste para o SB
 //@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //Não substitua pelo banco de dados em memória
 //@ActiveProfiles("test") //qual o profile ele deve utilizar para passar os testes
 public class ProdutoServiceTest {
