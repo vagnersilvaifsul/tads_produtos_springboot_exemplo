@@ -22,8 +22,8 @@ public class AutenticacaoController {
     @PostMapping
     public ResponseEntity<TokenJwtDTO> efetuaLogin(@RequestBody @Valid UsuarioDTO data){
         var authenticationDTO = new UsernamePasswordAuthenticationToken(data.usuario(), data.senha()); //converte o DTO em DTO do Spring Security
-        var authentication = manager.authenticate(authenticationDTO);
-        var tokenJWT = tokenService.geraToken((Usuario) authentication.getPrincipal());
-        return ResponseEntity.ok(new TokenJwtDTO(tokenJWT));
+        var authentication = manager.authenticate(authenticationDTO); //autentica o usuário (esse objeto contém o usuário e a senha)
+        var tokenJWT = tokenService.geraToken((Usuario) authentication.getPrincipal()); //gera o token JWT para enviar na response
+        return ResponseEntity.ok(new TokenJwtDTO(tokenJWT)); //envia a response com o token JWT
     }
 }
