@@ -21,8 +21,8 @@ public class AutenticacaoController {
 
     @PostMapping
     public ResponseEntity<TokenJwtDTO> efetuaLogin(@RequestBody @Valid UsuarioDTO data){
-        var authenticationToken = new UsernamePasswordAuthenticationToken(data.usuario(), data.senha()); //converte o DTO em DTO do Spring Security
-        var authentication = manager.authenticate(authenticationToken);
+        var authenticationDTO = new UsernamePasswordAuthenticationToken(data.usuario(), data.senha()); //converte o DTO em DTO do Spring Security
+        var authentication = manager.authenticate(authenticationDTO);
         var tokenJWT = tokenService.geraToken((Usuario) authentication.getPrincipal());
         return ResponseEntity.ok(new TokenJwtDTO(tokenJWT));
     }
