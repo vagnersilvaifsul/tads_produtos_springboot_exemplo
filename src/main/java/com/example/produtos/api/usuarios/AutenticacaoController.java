@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/login")
 public class AutenticacaoController {
 
-    @Autowired //Para injetar essa dependência tem que obtê-lo no Config (na classe de configuração, nesse caso, SecurityConfigurations
+    @Autowired
     private AuthenticationManager manager; //o gerenciador de autenticação é quem dispara o loadUserByUsername (isto é, é interno do Spring Security, tem que usar ele)
 
     @Autowired
