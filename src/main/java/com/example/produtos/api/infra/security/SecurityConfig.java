@@ -51,7 +51,7 @@ public class SecurityConfig {
             })
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class); //manda o filter do projeto vir antes do filter do Spring
 
-        //Esta é a configuração para Basic Authentication (vimos no início do conteúdo sobre Spring Secutiry)
+        //Esta é a configuração para Basic Authentication (vimos no início do conteúdo sobre Spring Security)
         //Basic Authentication
 //        http
 //            .csrf(csrf -> csrf.disable()) //desabilita a proteção contra ataques Cross-site Request Forger
