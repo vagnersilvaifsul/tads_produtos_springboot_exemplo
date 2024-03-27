@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
@@ -18,7 +18,7 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
-        <!-- Módulos Base do Sping para Projetos de API REST -->
+        <!-- Módulos Base do Spring para Projetos de API REST -->
         <!-- Spring MVC, para os Controllers (as requisições RESTful) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
-            <version>6.8.0</version>
+            <version>9.2.0</version>
         </dependency>
 
         <!-- Útil -->
