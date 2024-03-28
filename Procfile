@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/tads_springboot_exemplo-1.1.0.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/tads_produtos_springboot_exemplo-2.0.0.jar
