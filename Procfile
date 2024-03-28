@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -Dspring.profiles.active=prod -jar target/tads_springboot_exemplo-1.1.0.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/tads_springboot_exemplo-1.1.0.jar
