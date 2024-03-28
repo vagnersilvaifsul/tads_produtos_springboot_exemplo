@@ -86,12 +86,13 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
-        <!-- H2 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!-- H2 (É um banco de dados relacional em memória, muito utilizado por testers -->
+        <!-- Eu deixei aqui como opção, para conhecerem e experimentar -->
+<!--        <dependency>-->
+<!--            <groupId>com.h2database</groupId>-->
+<!--            <artifactId>h2</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
 
         <!-- Documentação -->
         <dependency>
