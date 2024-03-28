@@ -5,15 +5,15 @@ import com.example.produtos.api.produto.ProdutoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@SpringBootTest(classes = ProdutosApplication.class) //indica que esta é uma classe de teste para o SB
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //Não substitua pelo banco de dados em memória
-//@ActiveProfiles("test") //qual o profile ele deve utilizar para passar os testes
+@SpringBootTest(classes = ProdutosApplication.class) //indica que esta é uma classe de teste para o Spring Boot
+@ActiveProfiles("test") //indica o profile que o Spring Boot deve utilizar para passar os testes
 public class ProdutoServiceTest {
 
     @Autowired
