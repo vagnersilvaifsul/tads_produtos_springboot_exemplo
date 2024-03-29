@@ -55,10 +55,10 @@ public class FirebaseStorageService {
 
 //        Blob blob = bucket.create("nome.txt","O texto do arquivo.".getBytes(), "text/html");
 
-        byte[] bytes = Base64.getDecoder().decode(uploadInput.getBase64());
+        byte[] bytes = Base64.getDecoder().decode(uploadInput.base64());
 
-        String fileName = uploadInput.getFileName();
-        Blob blob = bucket.create(fileName,bytes, uploadInput.getMimeType());
+        String fileName = uploadInput.fileName();
+        Blob blob = bucket.create(fileName,bytes, uploadInput.mimeType());
 
         // Assina URL válida por N dias
 //        URL signedUrl = blob.signUrl(3, TimeUnit.DAYS);

@@ -1,10 +1,8 @@
 package com.example.produtos.api.upload;
 
-import lombok.Data;
-
-@Data
-public class UploadInput {
-    private String fileName;
-    private String base64;
-    private String mimeType;
+public record UploadInput(
+    String fileName,
+    String base64,
+    String mimeType
+) {
 }
