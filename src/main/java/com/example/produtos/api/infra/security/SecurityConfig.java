@@ -19,26 +19,26 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration //indica para o spring que esta é uma classe de configuração
+@Configuration //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean de Configuração
 @EnableWebSecurity //indica para o spring que esta classe irá personalizar as configurações de segurança
 @EnableMethodSecurity(securedEnabled = true) //controle de acesso por anotação em métodos
 public class SecurityConfig {
 
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private SecurityFilter securityFilter;
 
 
-    @Bean
+    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    @Bean
+    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //Configuração JWT Authentication
         http
@@ -65,7 +65,7 @@ public class SecurityConfig {
     }
 
     //Este método é utilizado para autenticar em memória (vimos isso em Basic Authentication, antes de criar as tabelas da feat usuarios, para autheticação por bando de dados)
-//    @Bean
+//    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo
 //    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
 //        UserDetails user = User.withUsername("user")
 //            .password(passwordEncoder.encode("user"))

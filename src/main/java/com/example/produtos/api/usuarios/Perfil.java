@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 
-
 @Entity(name = "Perfil")
 @Table(name = "perfis")
 @Data

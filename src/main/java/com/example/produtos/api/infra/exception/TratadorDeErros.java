@@ -8,21 +8,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@RestControllerAdvice
+/*
+    Indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean onde se fará o
+    tratamento das exceções lançadas pelos Controllers, como, @RestController.
+ */
+@RestControllerAdvice //leia o comentário acima para entender essa anotação
 public class TratadorDeErros extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity trataErro400(ConstraintViolationException ex){ //400 - Bad Request para Erro de Validação
         var erros = ex.getConstraintViolations();
         return ResponseEntity.badRequest().body(erros.stream().map(ErroValidation::new).toList());
-    }
-
-    private record ErroValidation(
-        String campo,
-        String mensagem) {
-        public ErroValidation(ConstraintViolation<?> erro){
-            this(erro.getPropertyPath().toString(), erro.getMessage()); //qual campo e qual a mensagem do Validation
-        }
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
@@ -33,5 +29,13 @@ public class TratadorDeErros extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity trataErro400() { //400 - Bad Request
         return ResponseEntity.badRequest().build();
+    }
+
+    private record ErroValidation(
+        String campo,
+        String mensagem) {
+        public ErroValidation(ConstraintViolation<?> erro){
+            this(erro.getPropertyPath().toString(), erro.getMessage()); //qual campo e qual a mensagem do Validation
+        }
     }
 }

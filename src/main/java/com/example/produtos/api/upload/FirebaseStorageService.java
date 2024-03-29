@@ -26,10 +26,10 @@ import java.util.Base64;
         allow read, write: if request.auth != null;
     }
 */
-@Service
+@Service //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de serviço de acesso ao bucket do GCP
 public class FirebaseStorageService {
 
-    @PostConstruct
+    @PostConstruct //ciclo de vida do Bean
     private void init() throws IOException {
         if(FirebaseApp.getApps().isEmpty()) {
             InputStream in =

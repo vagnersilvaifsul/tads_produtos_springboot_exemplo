@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+@Service //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de serviço de dados
 public class ProdutoService {
 
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private ProdutoRepository rep;
 
     public List<ProdutoDTOResponse> getProdutos() {

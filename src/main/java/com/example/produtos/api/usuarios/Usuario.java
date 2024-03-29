@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
-
 @Entity(name = "User")
 @Table(name = "usuarios")
 @Data

@@ -13,13 +13,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component //Uma classe genérica que faz algum serviço de infraestrutura
-//OncePerRequestFilter (do Spring, executada uma única vez por request) implementa a classe Filter
+@Component //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean de Configuração
 public class SecurityFilter extends OncePerRequestFilter {
 
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private TokenService tokenService;
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private UsuarioRepository repository;
 
     @Override

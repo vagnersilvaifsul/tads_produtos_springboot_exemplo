@@ -9,14 +9,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("api/v1/login")
+@RestController //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de controle API REST
+@RequestMapping("api/v1/login") //Endpoint padrão da classe
 public class AutenticacaoController {
 
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private AuthenticationManager manager; //o gerenciador de autenticação é quem dispara o loadUserByUsername (isto é, é interno do Spring Security, tem que usar ele)
 
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private TokenService tokenService;
 
     @PostMapping

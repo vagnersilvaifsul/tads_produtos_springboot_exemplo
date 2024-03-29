@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/v1/upload")
+@RestController //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de controle API REST
+@RequestMapping("/api/v1/upload") //Endpoint padrão da classe
 public class UploadController {
 
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private FirebaseStorageService uploadService;
 
     @PostMapping

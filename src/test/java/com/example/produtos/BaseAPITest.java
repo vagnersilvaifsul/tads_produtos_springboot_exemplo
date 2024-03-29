@@ -17,11 +17,11 @@ import static org.springframework.http.HttpMethod.*;
 
 @SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class BaseAPITest {
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     protected TestRestTemplate rest;
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private AutenticacaoService service;
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private TokenService tokenService;
 
     private String jwtToken = "";

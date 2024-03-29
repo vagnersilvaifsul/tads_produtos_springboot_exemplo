@@ -10,11 +10,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RestController
-@RequestMapping("api/v1/produtos")
+@RestController //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de controle API REST
+@RequestMapping("api/v1/produtos") //Endpoint padrão da classe
 public class ProdutoController {
 
-    @Autowired
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private ProdutoService service;
 
     @GetMapping
