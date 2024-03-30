@@ -5,11 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
+/*
+    Pelo Princípio da Responsabilidade Única (SRP - Single-responsibility Principle) os controller manipulam
+    apenas DTOs.
+    Porém, se a meta for entregar o produto no Curto Prazo, é aceitável não utilizar DTO no controller.
+    Mas, se a meta for de Longo Prazo, a entrega de um produto em produção, é importante aplicar o SRP, e fazer
+    com que a controller trabalhe apenas com DTOs, isso facilitará a manutenção no futuro e ajuda na segurança do
+    aplicativo (não expõe todos os dados aos clientes do aplicativo).
+ */
 @RestController //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de controle API REST
 @RequestMapping("api/v1/produtos") //Endpoint padrão da classe
 public class ProdutoController {
@@ -19,7 +28,7 @@ public class ProdutoController {
 
     @GetMapping
     public ResponseEntity<List<ProdutoDTOResponse>> selectAll() {
-        return ResponseEntity.ok(service.getProdutos());
+        return ResponseEntity.ok(service.getProdutos().stream().map(ProdutoDTOResponse::create).collect(Collectors.toList()));
     }
 
     @GetMapping("{id}")
@@ -36,14 +45,14 @@ public class ProdutoController {
         var produtos = service.getProdutosByNome(nome);
         return produtos.isEmpty() ?
             ResponseEntity.noContent().build() :
-            ResponseEntity.ok(produtos);
+            ResponseEntity.ok(produtos.stream().map(ProdutoDTOResponse::create).collect(Collectors.toList()));
     }
 
     @PostMapping
     @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<URI> insert(@RequestBody Produto produto){
+    public ResponseEntity<URI> insert(@RequestBody Produto produto, UriComponentsBuilder uriBuilder){
         var p = service.insert(produto);
-        var location = getUri(p.getId());
+        var location = uriBuilder.path("api/v1/produtos/{id}").buildAndExpand(p.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
@@ -52,19 +61,14 @@ public class ProdutoController {
         produto.setId(id);
         var p = service.update(produto, id);
         return p != null ?
-            ResponseEntity.ok(p) :
+            ResponseEntity.ok(ProdutoDTOResponse.create(p)):
             ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
+    public ResponseEntity delete(@PathVariable("id") Long id){
         return service.delete(id) ?
             ResponseEntity.ok().build() :
             ResponseEntity.notFound().build();
-    }
-
-    //utilitário
-    private URI getUri(Long id) {
-        return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
     }
 }

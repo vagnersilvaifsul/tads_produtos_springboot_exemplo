@@ -77,14 +77,15 @@ public class ProdutoControllerTest extends BaseAPITest {
 
         //Insert
         var response = post("/api/v1/produtos", produto, null);
-        System.out.println(response);
 
         //Verifica se criou
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
         //Busca o objeto
         var location = response.getHeaders().get("location").get(0);
+        System.out.println(location);
         var p = getProduto(location).getBody();
+        System.out.println(p);
 
         assertNotNull(p);
         assertEquals("Teste", p.getNome());
