@@ -30,6 +30,8 @@ public class ProdutoController {
     private ProdutoService service;
 
     @GetMapping
+    //O PageableDefault é sobrescrito pelos parâmetros da requisição (ou seja, a requisição é mandatória)
+    //Experimente fazer a requisição assim: /api/v1/produtos?size=2&sort=nome,desc (verá que sobrescreve o PageableDefault)
     public ResponseEntity<Page<ProdutoDTOResponse>> selectAll(@PageableDefault(size = 50, sort = "nome") Pageable paginacao) {
         return ResponseEntity.ok(service.getProdutos(paginacao).map(ProdutoDTOResponse::create));
     }
