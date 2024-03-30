@@ -5,6 +5,7 @@ import com.example.produtos.api.produto.ProdutoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
@@ -21,8 +22,9 @@ public class ProdutoServiceTest {
 
     @Test
     public void testGetProdutos() {
-        var produtos = service.getProdutos();
-        assertEquals(5, produtos.size());
+        var pageable = PageRequest.of(0, 50);
+        var produtos = service.getProdutos(pageable);
+        assertEquals(5, produtos.getContent().size());
     }
 
     @Test

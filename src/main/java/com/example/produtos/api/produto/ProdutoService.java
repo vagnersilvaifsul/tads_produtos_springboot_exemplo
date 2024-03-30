@@ -1,6 +1,8 @@
 package com.example.produtos.api.produto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -17,8 +19,8 @@ public class ProdutoService {
     @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private ProdutoRepository rep;
 
-    public List<Produto> getProdutos() {
-        return rep.findAll();
+    public Page<Produto> getProdutos(Pageable paginacao) {
+        return rep.findAll(paginacao);
     }
 
     public Optional<Produto> getProdutoById(Long id) {

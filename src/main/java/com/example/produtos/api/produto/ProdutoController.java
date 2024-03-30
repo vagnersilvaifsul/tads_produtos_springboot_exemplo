@@ -2,6 +2,9 @@ package com.example.produtos.api.produto;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +30,8 @@ public class ProdutoController {
     private ProdutoService service;
 
     @GetMapping
-    public ResponseEntity<List<ProdutoDTOResponse>> selectAll() {
-        return ResponseEntity.ok(service.getProdutos().stream().map(ProdutoDTOResponse::create).collect(Collectors.toList()));
+    public ResponseEntity<Page<ProdutoDTOResponse>> selectAll(@PageableDefault(size = 50, sort = "nome") Pageable paginacao) {
+        return ResponseEntity.ok(service.getProdutos(paginacao).map(ProdutoDTOResponse::create));
     }
 
     @GetMapping("{id}")
