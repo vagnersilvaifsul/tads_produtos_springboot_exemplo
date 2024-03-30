@@ -24,36 +24,44 @@ public class ProdutoControllerTest extends BaseAPITest {
         return get(url, ProdutoDTOResponse.class);
     }
 
-    private ResponseEntity<List<ProdutoDTOResponse>> getProdutos(String url) {
+    private ResponseEntity<CustomPageImpl<ProdutoDTOResponse>> getProdutosPageble(String url) {
         var headers = getHeaders();
 
         return rest.exchange(
             url,
             HttpMethod.GET,
             new HttpEntity<>(headers),
-            new ParameterizedTypeReference<>() {
-            });
+            new ParameterizedTypeReference<>() {});
+    }
+
+    private ResponseEntity<List<ProdutoDTOResponse>> getProdutosList(String url) {
+        var headers = getHeaders();
+
+        return rest.exchange(
+            url,
+            HttpMethod.GET,
+            new HttpEntity<>(headers),
+            new ParameterizedTypeReference<>() {});
     }
 
     @Test
-    public void selectAll() { //TODO: fazer um fix (parou de funcionar ao passar para Pageble no Controller)
-        var produtos = getProdutos("/api/v1/produtos").getBody();
-        assertNotNull(produtos);
-        assertEquals(5, produtos.size());
+    public void selectAll() {
+        var page = getProdutosPageble("/api/v1/produtos").getBody();
+        assertNotNull(page);
+        assertEquals(5, page.stream().count());
 
-        produtos = getProdutos("/api/v1/produtos?page=0&size=5").getBody();
-        assertNotNull(produtos);
-        assertEquals(5, produtos.size());
+        page = getProdutosPageble("/api/v1/produtos?page=0&size=5").getBody();
+        assertNotNull(page);
+        assertEquals(5, page.stream().count());
     }
 
     @Test
     public void selectByNome() {
+        assertEquals(1, getProdutosList("/api/v1/produtos/nome/arroz").getBody().size());
+        assertEquals(1, getProdutosList("/api/v1/produtos/nome/cafe").getBody().size());
+        assertEquals(1, getProdutosList("/api/v1/produtos/nome/feijao").getBody().size());
 
-        assertEquals(1, getProdutos("/api/v1/produtos/nome/arroz").getBody().size());
-        assertEquals(1, getProdutos("/api/v1/produtos/nome/cafe").getBody().size());
-        assertEquals(1, getProdutos("/api/v1/produtos/nome/feijao").getBody().size());
-
-        assertEquals(HttpStatus.NO_CONTENT, getProdutos("/api/v1/produtos/nome/xxx").getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, getProdutosList("/api/v1/produtos/nome/xxx").getStatusCode());
     }
 
     @Test

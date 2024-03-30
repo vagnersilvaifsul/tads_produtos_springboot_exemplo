@@ -42,8 +42,6 @@ public abstract class BaseAPITest {
 
         // Gera token
         jwtToken = tokenService.geraToken(user);
-        System.out.println("jwtToken gerado:");
-        System.out.println(jwtToken);
         assertNotNull(jwtToken);
     }
 
