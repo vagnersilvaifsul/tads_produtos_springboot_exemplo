@@ -36,7 +36,7 @@ public class ProdutoControllerTest extends BaseAPITest {
     }
 
     @Test
-    public void selectAll() {
+    public void selectAll() { //TODO: fazer um fix (parou de funcionar ao passar para Pageble no Controller)
         var produtos = getProdutos("/api/v1/produtos").getBody();
         assertNotNull(produtos);
         assertEquals(5, produtos.size());
@@ -83,13 +83,11 @@ public class ProdutoControllerTest extends BaseAPITest {
 
         //Busca o objeto
         var location = response.getHeaders().get("location").get(0);
-        System.out.println(location);
         var p = getProduto(location).getBody();
-        System.out.println(p);
 
         assertNotNull(p);
-        assertEquals("Teste", p.getNome());
-        assertEquals(Integer.valueOf(100), p.getEstoque());
+        assertEquals("Teste", p.nome());
+        assertEquals(Integer.valueOf(100), p.estoque());
 
         //Deleta o objeto
         delete(location, null);
@@ -111,7 +109,6 @@ public class ProdutoControllerTest extends BaseAPITest {
 
         //Insert
         var response = post("/api/v1/produtos", produto, null);
-        System.out.println(response);
 
         //Verifica se criou
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -121,16 +118,15 @@ public class ProdutoControllerTest extends BaseAPITest {
         ProdutoDTOResponse p = getProduto(location).getBody();
 
         assertNotNull(p);
-        assertEquals("Teste", p.getNome());
-        assertEquals(Integer.valueOf(100), p.getEstoque());
+        assertEquals("Teste", p.nome());
+        assertEquals(Integer.valueOf(100), p.estoque());
 
         //depois altera seu valor
         var pa = Produto.create(p);
         pa.setEstoque(500);
 
         //Update
-        response = put("/api/v1/produtos/" + p.getId(), pa, null);
-        System.out.println(response);
+        put("/api/v1/produtos/" + p.id(), pa, null);
         assertEquals(Integer.valueOf(500), pa.getEstoque());
 
         //Deleta o objeto

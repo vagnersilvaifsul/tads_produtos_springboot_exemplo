@@ -33,14 +33,14 @@ public class ProdutoController {
     //O PageableDefault é sobrescrito pelos parâmetros da requisição (ou seja, a requisição é mandatória)
     //Experimente fazer a requisição assim: /api/v1/produtos?size=2&sort=nome,desc (verá que sobrescreve o PageableDefault)
     public ResponseEntity<Page<ProdutoDTOResponse>> selectAll(@PageableDefault(size = 50, sort = "nome") Pageable paginacao) {
-        return ResponseEntity.ok(service.getProdutos(paginacao).map(ProdutoDTOResponse::create));
+        return ResponseEntity.ok(service.getProdutos(paginacao).map(ProdutoDTOResponse::new));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<ProdutoDTOResponse> selectById(@PathVariable("id") Long id) {
         var p = service.getProdutoById(id);
         if(p.isPresent()){
-            return ResponseEntity.ok(ProdutoDTOResponse.create(p.get()));
+            return ResponseEntity.ok(new ProdutoDTOResponse(p.get()));
         }
         return ResponseEntity.notFound().build();
     }
@@ -50,7 +50,7 @@ public class ProdutoController {
         var produtos = service.getProdutosByNome(nome);
         return produtos.isEmpty() ?
             ResponseEntity.noContent().build() :
-            ResponseEntity.ok(produtos.stream().map(ProdutoDTOResponse::create).collect(Collectors.toList()));
+            ResponseEntity.ok(produtos.stream().map(ProdutoDTOResponse::new).collect(Collectors.toList()));
     }
 
     @PostMapping
@@ -66,7 +66,7 @@ public class ProdutoController {
         produto.setId(id);
         var p = service.update(produto, id);
         return p != null ?
-            ResponseEntity.ok(ProdutoDTOResponse.create(p)):
+            ResponseEntity.ok(new ProdutoDTOResponse(p)):
             ResponseEntity.notFound().build();
     }
 

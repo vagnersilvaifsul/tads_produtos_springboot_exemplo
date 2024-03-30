@@ -12,7 +12,6 @@ public class AutenticacaoService implements UserDetailsService {
     private UsuarioRepository rep;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Chamou loadUserByUsername");
         return rep.findByUsuario(username);
     }
 }
