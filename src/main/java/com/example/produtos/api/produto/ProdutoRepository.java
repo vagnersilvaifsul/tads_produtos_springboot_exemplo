@@ -30,5 +30,5 @@ public interface ProdutoRepository extends JpaRepository<Produto,Long> {
     List<Produto> findByNome(String nome);
 
     //A mesma consulta poderia ter sido resolvida com o Padrão Repository em Domain Speak
-    //List<Produto> findByNomeBeforeOrderByNome(String nome);
+    //List<Produto> findByNomeStartsWithOrderByNome(String nome);
 }
