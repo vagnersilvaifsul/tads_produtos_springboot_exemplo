@@ -12,6 +12,12 @@ import java.util.List;
   O aplicativo se comunica com o repositório em Domain Speak, e o repositório, por sua vez, se comunica com o armazenamento
   de dados em Query Speak.
  */
+
+/*
+    JpaRepository tem como superclasse raiz a interface Repository, uma interface de marcação, sem nada dentro.
+    Repository serve para indicar ao Spring Boot que a classe que a extende deve ser inserida no Context do
+    aplicativo pelo Spring Boot (é por isso que não precisa inserir uma anotação acima da classe).
+ */
 public interface ProdutoRepository extends JpaRepository<Produto,Long> {
     /*
         O Padrão Repository do Spring Data, apesar de nos fornecer uma inferface Domain Speak, inteligente o
