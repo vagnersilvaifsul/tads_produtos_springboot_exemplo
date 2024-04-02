@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
   O aplicativo se comunica com o repositório em Domain Speak, e o repositório, por sua vez, se comunica com o armazenamento
   de dados em Query Speak.
  */
+/*
+    Esta classe implementa o CRUD de usuários. A autenticação fica a cargo da AutenticacaoRepository.
+ */
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
-    Usuario findByUsuario(String usuario);
+
 }

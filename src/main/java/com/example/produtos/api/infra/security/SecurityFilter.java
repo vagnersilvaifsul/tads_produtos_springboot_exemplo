@@ -1,6 +1,6 @@
 package com.example.produtos.api.infra.security;
 
-import com.example.produtos.api.usuarios.UsuarioRepository;
+import com.example.produtos.api.usuarios.AutenticacaoRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private TokenService tokenService;
     @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
-    private UsuarioRepository repository;
+    private AutenticacaoRepository repository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
