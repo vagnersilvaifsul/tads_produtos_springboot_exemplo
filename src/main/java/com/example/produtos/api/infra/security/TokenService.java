@@ -25,6 +25,7 @@ public class TokenService {
             return JWT.create()
                 .withIssuer("API Produtos Exemplo de TADS")
                 .withSubject(usuario.getUsername())
+                .withIssuedAt(LocalDateTime.now().toInstant(ZoneOffset.of("-03:00")))
                 .withExpiresAt(dataExpiracao())
                 .sign(algorithm);
         } catch (JWTCreationException exception){

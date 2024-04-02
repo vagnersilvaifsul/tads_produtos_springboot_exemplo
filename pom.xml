@@ -50,6 +50,7 @@
         </dependency>
 
         <!-- Security -->
+        <!-- Isso ativa uma configuração padrão de vários filtros e outros componentes -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
