@@ -61,8 +61,7 @@ public class ProdutoService {
         if(optional.isPresent()) {
             rep.deleteById(id);
             return true;
-        }else {
-            return false;
         }
+        return false;
     }
 }
