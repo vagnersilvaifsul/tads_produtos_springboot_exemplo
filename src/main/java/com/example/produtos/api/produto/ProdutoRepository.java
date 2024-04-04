@@ -36,6 +36,6 @@ public interface ProdutoRepository extends JpaRepository<Produto,Long> {
         O Spring Data é tão flexível que é possível utlizar SQL no lugar do JPQL, basta adicionar o argumento
         nativeQuery=true na @Query
         Se fossermos reescrever o exemplo de findByNome em SQL, ficaria assim:
-        @Query(value = "SELECT p FROM produtos p where p.nome like ?1 order by p.nome", nativeQuery=true)
+        @Query(value = "select p from produtos p where p.nome like ?1 order by p.nome", nativeQuery=true)
      */
 }

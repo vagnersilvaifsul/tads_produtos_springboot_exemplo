@@ -81,14 +81,9 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
-        </dependency>
+
         <!-- H2 (É um banco de dados relacional em memória, muito utilizado por testers -->
-        <!-- Eu deixei aqui como opção, para conhecerem e experimentar -->
+        <!-- Eu deixei aqui como opção para você conhecer e experimentar -->
 <!--        <dependency>-->
 <!--            <groupId>com.h2database</groupId>-->
 <!--            <artifactId>h2</artifactId>-->
