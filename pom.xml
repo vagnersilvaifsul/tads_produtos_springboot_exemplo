@@ -19,7 +19,7 @@
     </properties>
     <dependencies>
         <!-- Módulos Base do Spring para Projetos de API REST -->
-        <!-- Spring MVC, para os Controllers (as requisições RESTful) -->
+        <!-- Spring Web, para os Controllers das requisições REST -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -71,6 +71,18 @@
         </dependency>
 
         <!-- Test -->
+        <!--
+            O que vem em no spring-boot-starter-test?
+            Spring Boot Test: utilitários de teste orientados ao Spring Boot
+            JSONPath: a linguagem de consulta para documentos JSON
+            AssertJ: API fluente para declaração de resultados
+            Hamcrest: Biblioteca de matchers (para uso de Regex)
+            JUnit 5: Biblioteca fundamental para escrever casos de teste
+            Mockito: estrutura de simulação para construção de casos de teste
+            JSONassert: Biblioteca de assertivas voltadas para documentos JSON
+            Spring Test: utilitários de teste do Spring Framework
+            XMLUnit: Kit de ferramentas para verificação de documentos XML
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
