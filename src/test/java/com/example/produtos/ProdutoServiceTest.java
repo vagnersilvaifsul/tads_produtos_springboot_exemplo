@@ -2,7 +2,7 @@ package com.example.produtos;
 
 import com.example.produtos.api.produto.Produto;
 import com.example.produtos.api.produto.ProdutoService;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Test; //jupiter indica que é JUnit 5
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
@@ -20,28 +20,28 @@ public class ProdutoServiceTest {
     @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private ProdutoService service;
 
-    @Test
-    public void testGetProdutos() {
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
+    public void testGetProdutos() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações
         var pageable = PageRequest.of(0, 50);
         var produtos = service.getProdutos(pageable);
         assertEquals(5, produtos.getContent().size());
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void testGetProdutoById(){
         var p = service.getProdutoById(1L);
         assertNotNull(p);
         assertEquals("Café", p.get().getNome());
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void getProdutosByNome(){
         assertEquals(1, service.getProdutosByNome("Café").size());
         assertEquals(1, service.getProdutosByNome("Arroz").size());
         assertEquals(1, service.getProdutosByNome("Feijão").size());
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void testInsert() {
 
         //cria o produto para teste
@@ -80,7 +80,7 @@ public class ProdutoServiceTest {
         }
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void TestUpdate(){
         var p = service.getProdutoById(1L).get();
         var nome = p.getNome(); //armazena o valor original para voltar na base
@@ -97,7 +97,7 @@ public class ProdutoServiceTest {
         assertNotNull(pDTO);
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void testDelete(){
         //cria o produto para teste
         var produto = new Produto();

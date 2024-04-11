@@ -3,7 +3,7 @@ package com.example.produtos;
 
 import com.example.produtos.api.produto.Produto;
 import com.example.produtos.api.produto.ProdutoDTOResponse;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Test; //jupiter indica que é JUnit 5
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -44,8 +44,8 @@ public class ProdutoControllerTest extends BaseAPITest {
             new ParameterizedTypeReference<>() {});
     }
 
-    @Test
-    public void selectAll() {
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
+    public void selectAll() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações
         var page = getProdutosPageble("/api/v1/produtos").getBody();
         assertNotNull(page);
         assertEquals(5, page.stream().count());
@@ -55,7 +55,7 @@ public class ProdutoControllerTest extends BaseAPITest {
         assertEquals(5, page.stream().count());
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void selectByNome() {
         assertEquals(1, getProdutosList("/api/v1/produtos/nome/arroz").getBody().size());
         assertEquals(1, getProdutosList("/api/v1/produtos/nome/cafe").getBody().size());
@@ -64,7 +64,7 @@ public class ProdutoControllerTest extends BaseAPITest {
         assertEquals(HttpStatus.NO_CONTENT, getProdutosList("/api/v1/produtos/nome/xxx").getStatusCode());
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void selectById() {
         assertNotNull(getProduto("/api/v1/produtos/1"));
         assertNotNull(getProduto("/api/v1/produtos/2"));
@@ -72,7 +72,7 @@ public class ProdutoControllerTest extends BaseAPITest {
         assertEquals(HttpStatus.NOT_FOUND, getProduto("/api/v1/produtos/1000").getStatusCode());
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void testInsert() {
         //cria o produto para teste
         var produto = new Produto();
@@ -104,7 +104,7 @@ public class ProdutoControllerTest extends BaseAPITest {
         assertEquals(HttpStatus.NOT_FOUND, getProduto(location).getStatusCode());
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void testUpdate() {
         //cria o produto para teste
         var produto = new Produto();
@@ -145,12 +145,12 @@ public class ProdutoControllerTest extends BaseAPITest {
 
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void testDelete() {
         this.testInsert();
     }
 
-    @Test
+    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void testGetNotFound() {
         var response = getProduto("/api/v1/produtos/1100");
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
