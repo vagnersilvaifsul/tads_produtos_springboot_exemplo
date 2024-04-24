@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
+    Classe Utilitária
     Esta classe instrui o Jackson (o conversor de JSON em objeto Java do Spring Boot) como converter um Page
     em objeto Java.
  */
