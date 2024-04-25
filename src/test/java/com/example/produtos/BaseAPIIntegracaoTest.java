@@ -37,6 +37,7 @@ public abstract class BaseAPIIntegracaoTest {
     protected HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
         return headers;
     }
 

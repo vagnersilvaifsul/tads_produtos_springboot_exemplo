@@ -6,6 +6,7 @@ import com.example.produtos.CustomPageImpl;
 import com.example.produtos.ProdutosApplication;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test; //jupiter indica que é JUnit 5
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -19,11 +20,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /*
     Realiza o teste de integração da unidade ProdutoController.
+    Utiliza como dependência principal a classe TestRestTemplate (do Spring), implementada na superclasse, BaseAPIIntegracaoTest.
  */
 
 @SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //indica que vai rodar o teste no container Spring Boot (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
 @ActiveProfiles("test") //indica o profile que o Spring Boot deve utilizar para passar os testes
 public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
+
+    @Autowired
+    private ProdutoController produtoController;
 
     //Métodos utilitários (eles encapsulam o TestRestTemplate e eliminam a repetição de código nos casos de teste)
     private ResponseEntity<ProdutoDTOResponse> getProduto(String url) {
@@ -157,7 +162,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         var responsePUT = put(location, produto, ProdutoDTOResponse.class);
 
         // ASSERT
-        assertEquals(HttpStatus.CREATED, responsePost.getStatusCode());
+        assertEquals(HttpStatus.OK, responsePUT.getStatusCode());
         assertEquals("Teste Modificado", responsePUT.getBody().nome());
         assertEquals("Desc. do produto Teste Modificado", responsePUT.getBody().descricao());
         assertEquals(new BigDecimal("20.00"), responsePUT.getBody().valorDeVenda());
