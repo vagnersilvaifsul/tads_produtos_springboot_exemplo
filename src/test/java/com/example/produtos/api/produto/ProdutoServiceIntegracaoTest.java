@@ -1,6 +1,7 @@
 package com.example.produtos.api.produto;
 
 import com.example.produtos.ProdutosApplication;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test; //jupiter indica que é JUnit 5
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /*
     Realiza o teste de integração da unidade ProdutoService.
@@ -39,7 +41,8 @@ public class ProdutoServiceIntegracaoTest {
     private ProdutoService service;
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void testGetProdutos() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações
+    @DisplayName("Busca os produtos na base de dados, espera 5 objetos")
+    public void testGetProdutosEsperaUmaPaginaComTamanhoX() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações
         // ARRANGE
         var pageable = PageRequest.of(0, 50);
 
@@ -51,22 +54,30 @@ public class ProdutoServiceIntegracaoTest {
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void testGetProdutoById(){
+    public void testGetProdutoByIdEsperaOProdutoDeId1(){
+        // ARRANGE + ACT
         var p = service.getProdutoById(1L);
+
+        // ASSERT
         assertNotNull(p);
         assertEquals("Café", p.get().getNome());
+        assertEquals("Café em pó tradicional Igaçu lata 400g", p.get().getDescricao());
+        assertEquals(100, p.get().getEstoque());
+        assertEquals(true, p.get().getSituacao());
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void getProdutosByNome(){
+    public void getProdutosByNomeEsperaUmObjetoPorNomePesquisado(){
         // ARRANGE + ACT + ASSERT
         assertEquals(1, service.getProdutosByNome("Café").size());
+        assertEquals(1, service.getProdutosByNome("Erva Mate").size());
+        assertEquals(1, service.getProdutosByNome("Chá Preto").size());
         assertEquals(1, service.getProdutosByNome("Arroz").size());
         assertEquals(1, service.getProdutosByNome("Feijão").size());
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void testInsert() {
+    public void testInsertEsperaOObjetoInseridoEODeleta() {
         // ARRANGE
         var produto = new Produto();
         produto.setNome("Teste");
@@ -104,7 +115,7 @@ public class ProdutoServiceIntegracaoTest {
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void TestUpdate(){
+    public void TestUpdateEsperaOObjetoAlteradoEODeleta(){
         // ARRANGE
         var p = service.getProdutoById(1L).get();
         var nome = p.getNome(); //armazena o valor original para voltar na base
@@ -123,7 +134,7 @@ public class ProdutoServiceIntegracaoTest {
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void testDelete(){
+    public void testDeleteEsperaAExclusaoDeUmObjetoInserido(){
         // ARRANGE
         var produto = new Produto();
         produto.setNome("Teste");
