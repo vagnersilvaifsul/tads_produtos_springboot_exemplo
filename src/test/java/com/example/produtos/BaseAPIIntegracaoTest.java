@@ -33,16 +33,9 @@ public abstract class BaseAPIIntegracaoTest {
 
     private String jwtToken = "";
 
-    //Método utilitário para montar o header da requisição
-    protected HttpHeaders getHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
-        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
-        return headers;
-    }
 
-    //Método para requisitar o token para um user especificado
-    @BeforeEach //essa anotação faz com que o método seja executado antes de qualquel requisição
+    //Método para requisitar o token para um user especificado (loga o usuário e obtém o token)
+    @BeforeEach //essa anotação faz com que o método seja executado antes dos demais, no setup
     public void setupTest() {
         // Le usuário
         Usuario user = (Usuario) service.loadUserByUsername("admin"); //note que os testes estão passando com o perfil "admin"
@@ -53,21 +46,29 @@ public abstract class BaseAPIIntegracaoTest {
         assertNotNull(jwtToken);
     }
 
-    //metodo genérico para o verbo POST
+    //Método utilitário para montar o header da requisição
+    protected HttpHeaders getHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+        return headers;
+    }
+
+    //metodo genérico para requisições com o verbo POST
     protected  <T> ResponseEntity<T> post(String url, Object body, Class<T> responseType) {
         HttpHeaders headers = getHeaders();
 
         return rest.exchange(url, POST, new HttpEntity<>(body, headers), responseType);
     }
 
-    //metodo genérico para o verbo PUT
+    //metodo genérico para requisições com o verbo PUT
     protected <T> ResponseEntity<T> put(String url, Object body, Class<T> responseType) {
         HttpHeaders headers = getHeaders();
 
         return rest.exchange(url, PUT, new HttpEntity<>(body, headers), responseType);
     }
 
-    //metodo genérico para o verbo GET
+    //metodo genérico para requisições com o verbo GET
     protected <T> ResponseEntity<T> get(String url, Class<T> responseType) {
 
         HttpHeaders headers = getHeaders();
@@ -75,7 +76,7 @@ public abstract class BaseAPIIntegracaoTest {
         return rest.exchange(url, GET, new HttpEntity<>(headers), responseType);
     }
 
-    //metodo genérico para o verbo DELETE
+    //metodo genérico para requisições com o verbo DELETE
     protected <T> ResponseEntity<T> delete(String url, Class<T> responseType) {
 
         HttpHeaders headers = getHeaders();
