@@ -42,7 +42,7 @@ public class ProdutoServiceIntegracaoTest {
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     @DisplayName("Busca os produtos na base de dados, espera 5 objetos")
-    public void testGetProdutosEsperaUmaPaginaComTamanhoX() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações
+    public void testGetProdutosEsperaUmaPaginaCom5Objetos() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações
         // ARRANGE
         var pageable = PageRequest.of(0, 50);
 
@@ -77,7 +77,7 @@ public class ProdutoServiceIntegracaoTest {
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void testInsertEsperaOObjetoInseridoEODeleta() {
+    public void testInsertEsperaOObjetoInseridoEoDeleta() {
         // ARRANGE
         var produto = new Produto();
         produto.setNome("Teste");
@@ -87,18 +87,15 @@ public class ProdutoServiceIntegracaoTest {
         produto.setEstoque(100);
         produto.setSituacao(true);
 
-        //insere o produto na base da dados
+        // ACT
         var p = service.insert(produto);
 
-        // ACT
-        assertNotNull(p);
-
         // ASSERT
+        assertNotNull(p);
         Long id = p.getId();
         assertNotNull(id);
         p = service.getProdutoById(id).get();
         assertNotNull(p); //confirma se o produto foi realmente inserido na base de dados
-
         //compara os valores inseridos com os valores pesquisados para confirmar
         assertEquals("Teste", p.getNome());
         assertEquals("Desc. do produto Teste", p.getDescricao());
@@ -115,7 +112,7 @@ public class ProdutoServiceIntegracaoTest {
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void TestUpdateEsperaOObjetoAlteradoEODeleta(){
+    public void TestUpdateEsperaOObjetoAlteradoEoDeleta(){
         // ARRANGE
         var p = service.getProdutoById(1L).get();
         var nome = p.getNome(); //armazena o valor original para voltar na base
@@ -124,6 +121,8 @@ public class ProdutoServiceIntegracaoTest {
 
         // ACT
         var pDTO = service.update(p, p.getId());
+
+        // ASSERT
         assertNotNull(pDTO);
         assertEquals("Café modificado", pDTO.getNome());
 
@@ -143,22 +142,18 @@ public class ProdutoServiceIntegracaoTest {
         produto.setValorDeVenda(new BigDecimal("10.00"));
         produto.setEstoque(100);
         produto.setSituacao(true);
-
-        // ACT
         var p = service.insert(produto);
-
-        //verifica se inseriu
         assertNotNull(p);
-
         //confirma se o produto foi realmente inserido na base de dados
         Long id = p.getId();
         assertNotNull(id);
         p = service.getProdutoById(id).get();
         assertNotNull(p);
 
-        //Deleta o objeto (para manter a consistência do banco de dados)
+        // ACT
         service.delete(id);
-        //Verifica se deletou
+
+        // ASSERT
         if(service.getProdutoById(id).isPresent()){
             fail("O produto não foi excluído");
         }
