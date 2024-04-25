@@ -94,7 +94,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         assertNotNull(getProduto("/api/v1/produtos/3"));
         assertNotNull(getProduto("/api/v1/produtos/4"));
         assertNotNull(getProduto("/api/v1/produtos/5"));
-        assertEquals(HttpStatus.NOT_FOUND, getProduto("/api/v1/produtos/1000").getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, getProduto("/api/v1/produtos/100000").getStatusCode());
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
@@ -169,7 +169,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         assertEquals(Integer.valueOf(500), responsePUT.getBody().estoque());
         assertEquals(false, responsePUT.getBody().situacao());
 
-        // ARRANGE + ACT
+        // ACT
         delete(location, null);
 
         // ASSERT
@@ -178,7 +178,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void testDeleteEspera404NotFound() {
+    public void testDeleteEspera200OkE404NotFound() {
         // ARRANGE
         var produto = new Produto();
         produto.setNome("Teste");
@@ -187,18 +187,19 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         produto.setValorDeVenda(new BigDecimal("10.00"));
         produto.setEstoque(100);
         produto.setSituacao(true);
-        var response = post("/api/v1/produtos", produto, null);
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        var location = response.getHeaders().get("location").get(0);
+        var responsePost = post("/api/v1/produtos", produto, null);
+        assertEquals(HttpStatus.CREATED, responsePost.getStatusCode());
+        var location = responsePost.getHeaders().get("location").get(0);
         var p = getProduto(location).getBody();
         assertNotNull(p);
         assertEquals("Teste", p.nome());
         assertEquals(Integer.valueOf(100), p.estoque());
 
         // ACT
-        delete(location, null);
+        var responseDelete = delete(location, null);
 
         // ASSERT
+        assertEquals(HttpStatus.OK, responseDelete.getStatusCode());
         assertEquals(HttpStatus.NOT_FOUND, getProduto(location).getStatusCode());
     }
 
@@ -208,6 +209,6 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         var response = getProduto("/api/v1/produtos/1100");
 
         // ASSERT
-        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }
