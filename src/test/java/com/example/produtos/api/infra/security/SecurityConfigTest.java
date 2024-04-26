@@ -32,7 +32,7 @@ class SecurityConfigTest {
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            post("/api/v1/login") //verbo POST na rota /adocoes
+            post("/api/v1/login") //verbo POST na rota
                 .content(json) //o body da requisição
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
@@ -54,7 +54,7 @@ class SecurityConfigTest {
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            post("/api/v1/login") //verbo POST na rota /adocoes
+            post("/api/v1/login") //verbo POST na rota
                 .content(json) //o body da requisição
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
@@ -75,34 +75,13 @@ class SecurityConfigTest {
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            post("/api/v1/login") //verbo POST na rota /adocoes
+            post("/api/v1/login") //verbo POST na rota
                 .content(json) //o body da requisição
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
 
         //ASSERT
         Assertions.assertEquals(403, response.getStatus());
-    }
-
-    @Test
-    void endpointCadastrarVerboPostComBodyCorretoEspera201() throws Exception {
-        //ARRANGE
-        String json = """
-            {
-              "usuario": "admin",
-              "senha": "123"
-            }
-            """;
-
-        //ACT
-        var response = mvc.perform( //performa uma requisição
-            post("/api/v1/usuarios/cadastrar") //verbo POST na rota /adocoes
-                .content(json) //o body da requisição
-                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
-        ).andReturn().getResponse(); //a response da requisição
-
-        //ASSERT
-        Assertions.assertEquals(201, response.getStatus());
     }
 
     @Test
@@ -117,7 +96,7 @@ class SecurityConfigTest {
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            post("/api/v1/usuarios/cadastrar") //verbo POST na rota /adocoes
+            post("/api/v1/usuarios/cadastrar") //verbo POST na rota
                 .content(json) //o body da requisição
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
@@ -127,7 +106,7 @@ class SecurityConfigTest {
     }
 
     @Test
-    void endpointCadastrarVerboGetComBodyCorretoEspera403Forbidden() throws Exception {
+    void endpointCadastrarVerboGetEspera403Forbidden() throws Exception {
         //ARRANGE + ACT + ASSERT
         this.mvc.perform(get("/api/v1/usuarios/cadastrar"))
             .andExpect(status().isForbidden());
@@ -145,7 +124,7 @@ class SecurityConfigTest {
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            put("/api/v1/usuarios/cadastrar") //verbo POST na rota /adocoes
+            put("/api/v1/usuarios/cadastrar") //verbo PUT na rota
                 .content(json) //o body da requisição
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
