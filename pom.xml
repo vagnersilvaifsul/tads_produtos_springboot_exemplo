@@ -55,9 +55,11 @@
         </dependency>
 
         <!-- Para adicionar segurança no app -->
-        <!-- Isso ativa uma configuração padrão com filtros e outros componentes -->
-        <!-- Spring Security é uma estrutura que fornece autenticação, autorização e proteção contra ataques comuns -->
-        <!-- https://docs.spring.io/spring-boot/docs/current/reference/html/web.html#web.security -->
+        <!-- Spring Security é uma estrutura que fornece autenticação, autorização e proteção contra ataques comuns
+            https://docs.spring.io/spring-boot/docs/current/reference/html/web.html#web.security -->
+        <!-- Configuração starter do Spring Security (o que vem configuradao por padrão)
+            https://docs.spring.io/spring-security/reference/servlet/getting-started.html#servlet-hello-auto-configuration
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
