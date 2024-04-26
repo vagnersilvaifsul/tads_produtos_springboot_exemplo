@@ -28,17 +28,17 @@ public class SecurityConfig {
     private SecurityFilter securityFilter;
 
 
-    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo
+    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo (objeto injetado em AutenticacaoController)
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo
+    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo (utilizado pelo Spring Boot para o decode da senha)
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo
+    @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo (configura a segurança do app)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //Configuração JWT Authentication
         http
