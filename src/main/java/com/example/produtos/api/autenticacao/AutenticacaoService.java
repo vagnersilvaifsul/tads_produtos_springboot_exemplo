@@ -1,4 +1,4 @@
-package com.example.produtos.api.usuarios;
+package com.example.produtos.api.autenticacao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

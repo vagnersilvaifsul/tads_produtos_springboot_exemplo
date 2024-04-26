@@ -1,5 +1,6 @@
-package com.example.produtos.api.usuarios;
+package com.example.produtos.api.autenticacao;
 
+import com.example.produtos.api.usuario.Usuario;
 import org.springframework.data.repository.Repository;
 
 /*

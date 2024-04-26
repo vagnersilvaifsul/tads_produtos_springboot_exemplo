@@ -1,6 +1,6 @@
 package com.example.produtos.api.infra.security;
 
-import com.example.produtos.api.usuarios.AutenticacaoRepository;
+import com.example.produtos.api.autenticacao.AutenticacaoRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,7 +41,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private String recuperarToken(HttpServletRequest request) {
         var autorizationHeader = request.getHeader("Authorization");
         if (autorizationHeader != null) { //só recupera o token de rotas que o tem
-            return autorizationHeader.replace("Bearer ", "");
+            return autorizationHeader.replace("Bearer ", ""); //limpa o header Authorization, deixando apenas o token
         }
         return null; //senão retorna null
     }

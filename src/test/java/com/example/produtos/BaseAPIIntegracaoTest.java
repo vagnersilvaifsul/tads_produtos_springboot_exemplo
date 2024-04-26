@@ -2,8 +2,8 @@ package com.example.produtos;
 
 
 import com.example.produtos.api.infra.security.TokenService;
-import com.example.produtos.api.usuarios.AutenticacaoService;
-import com.example.produtos.api.usuarios.Usuario;
+import com.example.produtos.api.autenticacao.AutenticacaoService;
+import com.example.produtos.api.usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

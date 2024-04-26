@@ -1,4 +1,4 @@
-package com.example.produtos.api.usuarios;
+package com.example.produtos.api.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

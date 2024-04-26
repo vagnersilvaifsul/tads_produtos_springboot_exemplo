@@ -1,4 +1,4 @@
-package com.example.produtos.api.usuarios;
+package com.example.produtos.api.usuario;
 
 import jakarta.persistence.*;
 import lombok.Data;

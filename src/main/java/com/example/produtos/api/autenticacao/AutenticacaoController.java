@@ -1,7 +1,9 @@
-package com.example.produtos.api.usuarios;
+package com.example.produtos.api.autenticacao;
 
 import com.example.produtos.api.infra.security.TokenJwtDTO;
 import com.example.produtos.api.infra.security.TokenService;
+import com.example.produtos.api.usuario.Usuario;
+import com.example.produtos.api.usuario.UsuarioDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
