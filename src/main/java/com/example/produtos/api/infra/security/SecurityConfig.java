@@ -44,10 +44,10 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) //desabilita a proteção contra ataques Cross-site Request Forger, comum em conexões Stateless
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //sem sessão (desabilita o stateful)
-            .authorizeHttpRequests(req -> {  //configurar a autorização
-                req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll(); //exceto, a rota de documentação (para doc em html no navegador; e para ferramentas automatizadas de geração de código)
-                req.requestMatchers(HttpMethod.POST, "/api/v1/login", "/api/v1/usuarios/cadastrar").permitAll(); //exceto, a rota de login e de cadastro de usuário
-                req.anyRequest().authenticated(); //demais rotas devem ser autenticadas
+            .authorizeHttpRequests(authorize -> {  //configurar a autorização
+                authorize.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll(); //exceto, a rota de documentação (para doc em html no navegador; e para ferramentas automatizadas de geração de código)
+                authorize.requestMatchers(HttpMethod.POST, "/api/v1/login", "/api/v1/usuarios/cadastrar").permitAll(); //exceto, a rota de login e de cadastro de usuário
+                authorize.anyRequest().authenticated(); //demais rotas devem ser autenticadas
             })
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class); //manda o filter do projeto vir antes do filter do Spring
 
@@ -55,9 +55,9 @@ public class SecurityConfig {
         //Basic Authentication
 //        http
 //            .csrf(csrf -> csrf.disable()) //desabilita a proteção contra ataques Cross-site Request Forger
-//            .authorizeHttpRequests(req -> {
-//                req.requestMatchers(HttpMethod.POST, "/api/v1/login").permitAll(); //exceto, a rota de login
-//                req.anyRequest().authenticated(); //demais rotas devem ser autenticadas
+//            .authorizeHttpRequests(authorize -> {
+//                authorize.requestMatchers(HttpMethod.POST, "/api/v1/login").permitAll(); //exceto, a rota de login
+//                authorize.anyRequest().authenticated(); //demais rotas devem ser autenticadas
 //            })
 //            .httpBasic(Customizer.withDefaults());
 
