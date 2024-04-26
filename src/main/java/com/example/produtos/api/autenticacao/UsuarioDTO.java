@@ -1,4 +1,4 @@
-package com.example.produtos.api.usuario;
+package com.example.produtos.api.autenticacao;
 
 import jakarta.validation.constraints.NotBlank;
 
