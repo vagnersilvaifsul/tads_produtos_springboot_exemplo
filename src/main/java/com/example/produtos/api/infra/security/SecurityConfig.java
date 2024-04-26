@@ -35,7 +35,7 @@ public class SecurityConfig {
 
     @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo (utilizado pelo Spring Boot para o decode da senha)
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); //devolve o BCryptPasswordEncoder como codificador e decodificador de senhas
     }
 
     @Bean //indica ao spring boot que essa configuração deve ser adicionada ao contexto do aplicativo (configura a segurança do app)
