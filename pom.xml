@@ -12,7 +12,7 @@
     <groupId>com.example</groupId>
     <artifactId>tads_produtos_springboot_exemplo</artifactId>
     <version>2.0.0</version>
-    <name>produtos</name>
+    <name>API Produto Aulas Tads</name>
     <description>TADS: Projeto de Exemplo API REST com Spring Boot</description>
     <properties>
         <java.version>17</java.version>

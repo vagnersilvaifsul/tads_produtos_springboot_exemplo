@@ -1,5 +1,6 @@
 package com.example.produtos.api.usuario;
 
+import com.example.produtos.api.servicos.mail.EmailService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,8 @@ public class UsuarioController {
     private UsuarioService service;
     @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private PerfilRepository perfilRepository;
+    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
+    private EmailService emailService;
 
     @PostMapping(path = "/cadastrar")
     @Transactional
@@ -64,9 +67,19 @@ public class UsuarioController {
         var usuario = new Usuario();
         usuario.setUsuario(usuarioDTO.usuario());
         usuario.setSenha(encoder.encode(usuarioDTO.senha()));
+        usuario.setNome(usuarioDTO.nome());
+        usuario.setSobrenome(usuarioDTO.sobrenome());
+        usuario.setEmail(usuarioDTO.email());
         usuario.setPerfis(Arrays.asList(perfilRepository.findByNome("ROLE_USER")));
         var p = service.insert(usuario);
         var location = uriBuilder.path("api/v1/usuarios/cadastrar/{id}").buildAndExpand(p.getId()).toUri();
+
+        //envia email
+        emailService.enviarEmail(
+            usuario.getEmail(),
+            "Solicitação de cadastro no TADS Srping Boot Exemplo",
+            "Olá " + usuario.getUsername() +"!\n\nUm email foi enviado para o endereço que você cadastrou: " + usuario.getEmail() + ". \nFavor ativar sua conta clicando neste link: {aqui um link para ativar a conta}");
+
         return ResponseEntity.created(location).build();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.produtos.api.upload;
+package com.example.produtos.api.servicos.upload;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Acl;

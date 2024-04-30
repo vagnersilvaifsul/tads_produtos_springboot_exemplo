@@ -16,6 +16,9 @@ public class Usuario implements UserDetails {
     private Long id;
     private String usuario;
     private String senha;
+    private String nome;
+    private String sobrenome;
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuarios_perfis",

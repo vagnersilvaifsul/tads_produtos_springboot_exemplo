@@ -1,4 +1,4 @@
-package com.example.produtos.api.upload;
+package com.example.produtos.api.servicos.upload;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
