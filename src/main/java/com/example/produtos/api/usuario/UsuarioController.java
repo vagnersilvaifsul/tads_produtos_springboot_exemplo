@@ -1,18 +1,13 @@
 package com.example.produtos.api.usuario;
 
-import com.example.produtos.api.servicos.mail.EmailService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.ValidationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Arrays;
 
 /*
@@ -48,21 +43,21 @@ import java.util.Arrays;
 
  */
 
-
-
 @RestController //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de controle API REST
-@RequestMapping("/api/v1/usuarios") //Endpoint padrão da classe
+//Note que @RequestMapping("api/v1/usuarios") foi propositalmente omitido nessa classe. Assim não será exposto o endpoint ao confirmar um email no navegador.
 public class UsuarioController {
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private UsuarioService service;
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private PerfilRepository perfilRepository;
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
-    private EmailService emailService;
 
-    @PostMapping(path = "/cadastrar")
+    //indica ao Spring Boot que ele deve injetar estas dependências para a classe funcionar
+    public UsuarioController(UsuarioService service, PerfilRepository perfilRepository){
+        this.service = service;
+        this.perfilRepository = perfilRepository;
+    }
+
+    @PostMapping(path = "/api/v1/usuarios/cadastrar")
     @Transactional
-    public ResponseEntity<URI> cadastrar(@RequestBody @Valid UsuarioDTO usuarioDTO, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<String> cadastrar(@RequestBody @Valid UsuarioDTO usuarioDTO, UriComponentsBuilder uriBuilder){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12); //leia o comentário acima da classe para entender mais
         var usuario = new Usuario();
         usuario.setUsuario(usuarioDTO.usuario());
@@ -71,15 +66,21 @@ public class UsuarioController {
         usuario.setSobrenome(usuarioDTO.sobrenome());
         usuario.setEmail(usuarioDTO.email());
         usuario.setPerfis(Arrays.asList(perfilRepository.findByNome("ROLE_USER")));
-        var p = service.insert(usuario);
-        var location = uriBuilder.path("api/v1/usuarios/cadastrar/{id}").buildAndExpand(p.getId()).toUri();
+        try{
+            var u = service.insert(usuario);
+            var location = uriBuilder.path("api/v1/usuarios/cadastrar/{id}").buildAndExpand(u.getId()).toUri();
+            return ResponseEntity.created(location).build();
+        }catch (ValidationException e){
+            return ResponseEntity.badRequest().body("Email já cadastrado");
+        }
+    }
 
-        //envia email
-        emailService.enviarEmail(
-            usuario.getEmail(),
-            "Solicitação de cadastro no TADS Srping Boot Exemplo",
-            "Olá " + usuario.getUsername() +"!\n\nUm email foi enviado para o endereço que você cadastrou: " + usuario.getEmail() + ". \nFavor ativar sua conta clicando neste link: {aqui um link para ativar a conta}");
-
-        return ResponseEntity.created(location).build();
+    @RequestMapping(value="/confirmar-email", method= {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<String> confirmarEmail(@RequestParam("token")String confirmationToken) {
+        var isToken = service.confirmarEmail(confirmationToken);
+        if(isToken){
+            return ResponseEntity.ok("Email confirmado com sucesso!");
+        }
+        return ResponseEntity.badRequest().build();
     }
 }

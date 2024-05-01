@@ -47,6 +47,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> {  //configurar a autorização
                 authorize.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll(); //exceto, a rota de documentação (para doc em html no navegador; e para ferramentas automatizadas de geração de código)
                 authorize.requestMatchers(HttpMethod.POST, "/api/v1/login", "/api/v1/usuarios/cadastrar").permitAll(); //exceto, a rota de login e de cadastro de usuário
+                authorize.requestMatchers(HttpMethod.GET, "/confirmar-email").permitAll(); //exceto, a rota de confirmação de email
                 authorize.anyRequest().authenticated(); //demais rotas devem ser autenticadas
             })
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class); //manda o filter do projeto vir antes do filter do Spring
