@@ -18,12 +18,11 @@ import java.util.List;
 public class Usuario implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String usuario;
-    private String senha;
     private String nome;
     private String sobrenome;
     @Column(unique = true)
     private String email;
+    private String senha;
     private boolean isConfirmado = false;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -44,7 +43,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return usuario;
+        return email;
     }
 
     @Override

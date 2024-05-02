@@ -13,9 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
     Esta classe implementa o CRUD de usuários. A autenticação fica a cargo da AutenticacaoRepository.
  */
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
-    Usuario findByEmailIgnoreCase(String email);
-
     Boolean existsByEmail(String email);
 
-    Usuario findByUsuario(String usuario);
+    Usuario findByEmail(String email);
 }

@@ -49,7 +49,7 @@ public class UsuarioService {
         var token = tokenConfirmacaoEmailRepository.findByToken(TokenDeConfirmacao);
         if(token != null)
         {
-            var usuario = rep.findByEmailIgnoreCase(token.getUsuario().getEmail());
+            var usuario = rep.findByEmail(token.getUsuario().getEmail());
             usuario.setConfirmado(true);
             rep.save(usuario);
             return true;

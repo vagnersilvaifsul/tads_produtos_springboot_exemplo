@@ -3,10 +3,18 @@ package com.example.produtos.api.infra.exception;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
     Indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean onde se fará o
@@ -16,7 +24,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class TratadorDeErros extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity trataErro400(ConstraintViolationException ex){ //400 - Bad Request para Erro de Validação
+    public ResponseEntity trataErro400(ConstraintViolationException ex){ //400 - Bad Request para Erro de Validação da Validation
         var erros = ex.getConstraintViolations();
         return ResponseEntity.badRequest().body(erros.stream().map(ErroValidation::new).toList());
     }
@@ -32,12 +40,12 @@ public class TratadorDeErros extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ValidacaoEmailJaCadastradoException.class)
-    public ResponseEntity trataErro400(ValidacaoEmailJaCadastradoException ex){ //400 - Bad Request para Erro de Validação
+    public ResponseEntity trataErro400(ValidacaoEmailJaCadastradoException ex){ //400 - Bad Request para Erro de Validação das Regras de Negócio
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     @ExceptionHandler(ValidacaoEmailAindaNaoConfirmadoException.class)
-    public ResponseEntity trataErro400(ValidacaoEmailAindaNaoConfirmadoException ex){ //400 - Bad Request para Erro de Validação
+    public ResponseEntity trataErro400(ValidacaoEmailAindaNaoConfirmadoException ex){ //400 - Bad Request para Erro de Validação das Regras de Negócio
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 

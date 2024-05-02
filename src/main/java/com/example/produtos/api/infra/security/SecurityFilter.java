@@ -29,7 +29,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         if(tokenJWT != null){ //se a rota tem o token (no caso, qualquer rota, exceto /login)
             var subject = tokenService.getSubject(tokenJWT);
             //autentica o subject (usuário que fez login, pois o Spring está configurado como Stateless)
-            var usuario = repository.findByUsuario(subject); //recupera o objeto usuário
+            var usuario = repository.findByEmail(subject); //recupera o objeto usuário
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities()); //DTO do Spring para o usuário que acessa o sistema
             SecurityContextHolder.getContext().setAuthentication(authentication); //força a autenticação no Spring
         }

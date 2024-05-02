@@ -13,7 +13,7 @@ public class ValidacaoEmailAindaNaoConfirmado implements ValidacaoLoginDoUsuario
 
     @Override
     public void validar(UsuarioDTO usuarioDTO) {
-        if (!rep.findByUsuario(usuarioDTO.usuario()).isConfirmado()){
+        if (!rep.findByEmail(usuarioDTO.email()).isConfirmado()){
             throw new ValidacaoEmailAindaNaoConfirmadoException("Erro: Este email ainda não foi confirmado. Favor acessar a caixa de email e clicar no link para confirmar.");
         }
     }
