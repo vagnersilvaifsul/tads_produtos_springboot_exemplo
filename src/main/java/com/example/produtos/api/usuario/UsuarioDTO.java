@@ -8,7 +8,7 @@ public record UsuarioDTO(
     String nome,
     @NotBlank
     String sobrenome,
-    @Email
+    @Email @NotBlank
     String email,
     @NotBlank
     String senha) {
