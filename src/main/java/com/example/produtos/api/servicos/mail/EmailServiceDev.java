@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-@Profile("dev")
+@Profile({"dev", "test"})
 public class EmailServiceDev implements EmailService {
 
     @Autowired
