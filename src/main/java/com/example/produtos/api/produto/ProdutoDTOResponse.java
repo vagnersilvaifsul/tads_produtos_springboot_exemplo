@@ -7,10 +7,10 @@ public record ProdutoDTOResponse(
     String nome,
     BigDecimal valorDeVenda,
     String descricao,
-    Boolean situacao,
-    Integer estoque
+    Integer estoque,
+    Boolean situacao
 ) {
     public ProdutoDTOResponse(Produto produto){
-        this(produto.getId(), produto.getNome(), produto.getValorDeVenda(), produto.getDescricao(), produto.getSituacao(), produto.getEstoque());
+        this(produto.getId(), produto.getNome(), produto.getValorDeVenda(), produto.getDescricao(), produto.getEstoque(), produto.getSituacao());
     }
 }

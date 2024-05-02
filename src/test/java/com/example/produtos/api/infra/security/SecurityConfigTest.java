@@ -25,7 +25,7 @@ class SecurityConfigTest {
         //ARRANGE
         String json = """
             {
-              "usuario": "user",
+              "email": "admin@email.com",
               "senha": "123"
             }
             """;
@@ -43,11 +43,11 @@ class SecurityConfigTest {
 
 
     @Test
-    void endpointLoginComUsuarioInexistenteEspera403() throws Exception {
+    void endpointLoginComUsuarioInexistenteEspera400() throws Exception {
         //ARRANGE
         String json = """
             {
-              "usuario": "adminttt",
+              "email": "admin",
               "senha": "123"
             }
             """;
@@ -60,7 +60,7 @@ class SecurityConfigTest {
         ).andReturn().getResponse(); //a response da requisição
 
         //ASSERT
-        Assertions.assertEquals(403, response.getStatus());
+        Assertions.assertEquals(400, response.getStatus());
     }
 
     @Test
@@ -68,7 +68,7 @@ class SecurityConfigTest {
         //ARRANGE
         String json = """
             {
-              "usuario": "admin",
+              "email": "admin@email.com",
               "senha": "123456"
             }
             """;
@@ -89,8 +89,8 @@ class SecurityConfigTest {
         //ARRANGE
         String json = """
             {
-              "key1": "admin",
-              "key2": "123"
+              "email": "adminemail",
+              "senha": "123"
             }
             """;
 
@@ -117,7 +117,7 @@ class SecurityConfigTest {
         //ARRANGE
         String json = """
             {
-              "usuario": "admin",
+              "email": "admin@email.com",
               "senha": "123"
             }
             """;
@@ -145,8 +145,8 @@ class SecurityConfigTest {
         //ARRANGE
         String json = """
             {
-              "key1": "",
-              "key2": ""
+              "email": "",
+              "senha": ""
             }
             """;
 
@@ -162,8 +162,8 @@ class SecurityConfigTest {
         //ARRANGE
         String json = """
             {
-              "key1": "",
-              "key2": ""
+              "email": "",
+              "senha": ""
             }
             """;
 

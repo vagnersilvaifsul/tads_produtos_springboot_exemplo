@@ -51,8 +51,8 @@ import java.util.Map;
 @RestController //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de controle API REST
 //Note que @RequestMapping("api/v1/usuarios") foi propositalmente omitido nessa classe. Assim não será exposto o endpoint ao confirmar um email no navegador.
 public class UsuarioController {
-    private UsuarioService service;
-    private PerfilRepository perfilRepository;
+    private final UsuarioService service;
+    private final PerfilRepository perfilRepository;
 
     //indica ao Spring Boot que ele deve injetar estas dependências para a classe funcionar
     public UsuarioController(UsuarioService service, PerfilRepository perfilRepository){

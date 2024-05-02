@@ -38,7 +38,7 @@ public abstract class BaseAPIIntegracaoTest {
     @BeforeEach //essa anotação faz com que o método seja executado antes dos demais, no setup
     public void setupTest() {
         // Le usuário
-        Usuario user = (Usuario) service.loadUserByUsername("admin"); //note que os testes estão passando com o perfil "admin"
+        Usuario user = (Usuario) service.loadUserByUsername("admin@email.com"); //note que os testes estão passando com o perfil "admin"
         assertNotNull(user);
 
         // Gera token

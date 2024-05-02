@@ -96,16 +96,16 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void testInsertEspera204CreatedE404ENotFound() {
         // ARRANGE
-        var produto = new Produto();
-        produto.setNome("Teste");
-        produto.setDescricao("Desc. do produto Teste");
-        produto.setValorDeCompra(new BigDecimal("5.00"));
-        produto.setValorDeVenda(new BigDecimal("10.00"));
-        produto.setEstoque(100);
-        produto.setSituacao(true);
+        var ProdutoDTOPost = new ProdutoDTOPost(
+            "Teste",
+            "Desc. do produto Teste",
+            new BigDecimal("5.00"),
+            new BigDecimal("10.00"),
+            100
+        );
 
         // ACT
-        var response = post("/api/v1/produtos", produto, null);
+        var response = post("/api/v1/produtos", ProdutoDTOPost, null);
 
         // ASSERT
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -128,42 +128,44 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
     public void testUpdateEspera200OkE404ENotFound() {
         // ARRANGE
-        var produto = new Produto();
-        produto.setNome("Teste");
-        produto.setDescricao("Desc. do produto Teste");
-        produto.setValorDeCompra(new BigDecimal("5.00"));
-        produto.setValorDeVenda(new BigDecimal("10.00"));
-        produto.setEstoque(100);
-        produto.setSituacao(true);
-        var responsePost = post("/api/v1/produtos", produto, null);
+        var ProdutoDTOPost = new ProdutoDTOPost(
+            "Teste",
+            "Desc. do produto Teste",
+            new BigDecimal("5.00"),
+            new BigDecimal("10.00"),
+            100
+        );
+
+        var responsePost = post("/api/v1/produtos", ProdutoDTOPost, null);
         assertEquals(HttpStatus.CREATED, responsePost.getStatusCode());
         var location = responsePost.getHeaders().get("location").get(0);
         var pDto = getProduto(location).getBody();
         assertNotNull(pDto);
         assertEquals("Teste", pDto.nome());
-        assertEquals(Integer.valueOf(100), pDto.estoque());
         assertEquals("Desc. do produto Teste", pDto.descricao());
         assertEquals(new BigDecimal("10.00"), pDto.valorDeVenda());
-        assertEquals(100, pDto.estoque());
+        assertEquals(Integer.valueOf(100), pDto.estoque());
         assertEquals(true, pDto.situacao());
-        produto.setId(pDto.id()); //(pega o id do DTO da response (o id gerado ao salvar), e modifica os dados para preparar para o update)
-        produto.setNome("Teste Modificado");
-        produto.setDescricao("Desc. do produto Teste Modificado");
-        produto.setValorDeCompra(new BigDecimal("15.00"));
-        produto.setValorDeVenda(new BigDecimal("20.00"));
-        produto.setEstoque(500);
-        produto.setSituacao(false);
+        //prepara um DTO para o PUT
+        var produtoDTOPut = new ProdutoDTOPut(
+            "Teste Modificado",
+            "Desc. do produto Teste Modificado",
+            new BigDecimal("20.00"),
+            new BigDecimal("50.00"),
+            500,
+            Boolean.FALSE
+        );
 
         // ACT
-        var responsePUT = put(location, produto, ProdutoDTOResponse.class);
+        var responsePUT = put(location, produtoDTOPut, ProdutoDTOResponse.class);
 
         // ASSERT
         assertEquals(HttpStatus.OK, responsePUT.getStatusCode());
         assertEquals("Teste Modificado", responsePUT.getBody().nome());
         assertEquals("Desc. do produto Teste Modificado", responsePUT.getBody().descricao());
-        assertEquals(new BigDecimal("20.00"), responsePUT.getBody().valorDeVenda());
+        assertEquals(new BigDecimal("50.00"), responsePUT.getBody().valorDeVenda());
         assertEquals(Integer.valueOf(500), responsePUT.getBody().estoque());
-        assertEquals(false, responsePUT.getBody().situacao());
+        assertEquals(Boolean.FALSE, responsePUT.getBody().situacao());
 
         // ACT
         delete(location, null);

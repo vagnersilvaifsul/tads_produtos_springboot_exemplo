@@ -11,7 +11,6 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /*
     Realiza o teste de integração da unidade ProdutoService.
@@ -31,9 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
     onde se avalia se o resultado obtido após a ação está de acordo com o que se esperava do teste. Caso haja alguma
     discrepância entre o resultado real e o esperado, o teste falhará.
  */
-
-
-@SpringBootTest(classes = ProdutosApplication.class) //indica que vai rodar o teste no container Spring Boot (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
+//TODO: ver pq não consegue injetar a EmailService
+@SpringBootTest (classes = ProdutosApplication.class) //indica que vai rodar o teste no container Spring Boot (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
 @ActiveProfiles("test") //indica o profile que o Spring Boot deve utilizar para passar os testes
 public class ProdutoServiceIntegracaoTest {
 
@@ -62,12 +60,15 @@ public class ProdutoServiceIntegracaoTest {
         assertNotNull(p);
         assertEquals("Café", p.get().getNome());
         assertEquals("Café em pó tradicional Igaçu lata 400g", p.get().getDescricao());
+        assertEquals(new BigDecimal("5.00"), p.get().getValorDeCompra());
+        assertEquals(new BigDecimal("10.00"), p.get().getValorDeVenda());
         assertEquals(100, p.get().getEstoque());
-        assertEquals(true, p.get().getSituacao());
+        assertEquals(Boolean.TRUE, p.get().getSituacao());
+
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void getProdutosByNomeEsperaUmObjetoPorNomePesquisado(){
+    public void testGetProdutosByNomeEsperaUmObjetoPorNomePesquisado(){
         // ARRANGE + ACT + ASSERT
         assertEquals(1, service.getProdutosByNome("Café").size());
         assertEquals(1, service.getProdutosByNome("Erva Mate").size());
@@ -112,24 +113,33 @@ public class ProdutoServiceIntegracaoTest {
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
-    public void TestUpdateEsperaOObjetoAlteradoEoDeleta(){
+    public void testUpdateEsperaOObjetoAlteradoERetornaAoValorOriginal(){
         // ARRANGE
-        var p = service.getProdutoById(1L).get();
-        var nome = p.getNome(); //armazena o valor original para voltar na base
-        p.setNome("Café modificado");
-        p.setValorDeCompra(new BigDecimal("5.00"));
+        var pOriginal = service.getProdutoById(1L).get(); //produto original na base de dados
+        var produtoMock = new Produto();
+        produtoMock.setId(pOriginal.getId());
+        produtoMock.setNome("Teste");
+        produtoMock.setDescricao("Desc. do produto Teste");
+        produtoMock.setValorDeCompra(new BigDecimal("5.00"));
+        produtoMock.setValorDeVenda(new BigDecimal("10.00"));
+        produtoMock.setEstoque(100);
+        produtoMock.setSituacao(false);
 
         // ACT
-        var pDTO = service.update(p, p.getId());
+        var produtoAlterado = service.update(produtoMock);
 
         // ASSERT
-        assertNotNull(pDTO);
-        assertEquals("Café modificado", pDTO.getNome());
+        assertNotNull(produtoAlterado);
+        assertEquals("Teste", produtoAlterado.getNome());
+        assertEquals("Desc. do produto Teste", produtoAlterado.getDescricao());
+        assertEquals(new BigDecimal("5.00"), produtoAlterado.getValorDeCompra());
+        assertEquals(new BigDecimal("10.00"), produtoAlterado.getValorDeVenda());
+        assertEquals(100, produtoAlterado.getEstoque());
+        assertEquals(Boolean.FALSE, produtoAlterado.getSituacao());
 
         //volta ao valor original (para manter a consistência do banco de dados)
-        p.setNome(nome);
-        pDTO = service.update(p, p.getId());
-        assertNotNull(pDTO);
+        var produtoOriginal = service.update(pOriginal);
+        assertNotNull(produtoOriginal);
     }
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste

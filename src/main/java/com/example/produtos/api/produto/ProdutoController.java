@@ -60,16 +60,33 @@ public class ProdutoController {
 
     @PostMapping
     @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<URI> insert(@RequestBody Produto produto, UriComponentsBuilder uriBuilder){
-        var p = service.insert(produto);
+    public ResponseEntity<URI> insert(@RequestBody ProdutoDTOPost produtoDTOPost, UriComponentsBuilder uriBuilder){
+        var p = service.insert(new Produto(
+            null,
+            produtoDTOPost.nome(),
+            produtoDTOPost.valorDeCompra(),
+            produtoDTOPost.valorDeVenda(),
+            produtoDTOPost.descricao(),
+            true,
+            produtoDTOPost.estoque(),
+            null
+        ));
         var location = uriBuilder.path("api/v1/produtos/{id}").buildAndExpand(p.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ProdutoDTOResponse> update(@PathVariable("id") Long id, @Valid @RequestBody Produto produto){
-        produto.setId(id);
-        var p = service.update(produto, id);
+    public ResponseEntity<ProdutoDTOResponse> update(@PathVariable("id") Long id, @Valid @RequestBody ProdutoDTOPut produtoDTOPut){
+        var p = service.update(new Produto(
+            id,
+            produtoDTOPut.nome(),
+            produtoDTOPut.valorDeCompra(),
+            produtoDTOPut.valorDeVenda(),
+            produtoDTOPut.descricao(),
+            produtoDTOPut.situacao(),
+            produtoDTOPut.estoque(),
+            null
+        ));
         return p != null ?
             ResponseEntity.ok(new ProdutoDTOResponse(p)):
             ResponseEntity.notFound().build();

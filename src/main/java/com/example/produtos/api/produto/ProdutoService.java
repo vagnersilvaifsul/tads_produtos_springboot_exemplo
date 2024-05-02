@@ -36,11 +36,11 @@ public class ProdutoService {
         return rep.save(produto);
     }
 
-    public Produto update(Produto produto, Long id) {
-        Assert.notNull(id,"Não foi possível atualizar o registro");
+    public Produto update(Produto produto) {
+        Assert.notNull(produto.getId(),"Não foi possível atualizar o registro");
 
         // Busca o produto no banco de dados
-        var optional = rep.findById(id);
+        var optional = rep.findById(produto.getId());
         if(optional.isPresent()) {
             var db = optional.get();
             // Copia as propriedades
