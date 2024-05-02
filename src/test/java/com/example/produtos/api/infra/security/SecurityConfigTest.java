@@ -134,6 +134,70 @@ class SecurityConfigTest {
     }
 
     @Test
+    void endPointConfirmarEmailVerboGetTokenValidoEspera200Ok() throws Exception {
+        //ARRANGE
+        String url = "/confirmar-email?token=aecc73b7-dae5-4011-925d-e07633d9993f";
+
+        //ACT
+        var response = mvc.perform( //performa uma requisição
+            get(url) //verbo GET na rota
+                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
+        ).andReturn().getResponse(); //a response da requisição
+
+        //ASSERT
+        Assertions.assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void endPointConfirmarEmailVerboGetTokenInvalidoEspera400BadRequest() throws Exception {
+        //ARRANGE
+        String url = "/confirmar-email?token=token_invalido";
+
+        //ACT
+        var response = mvc.perform( //performa uma requisição
+            get(url) //verbo GET na rota
+                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
+        ).andReturn().getResponse(); //a response da requisição
+
+        //ASSERT
+        Assertions.assertEquals(400, response.getStatus());
+    }
+
+    @Test
+    void endPointConfirmarEmailVerboPostPutEDeleteTokenValidoEspera403Forbidden() throws Exception {
+        //ARRANGE
+        String url = "/confirmar-email?token=token=aecc73b7-dae5-4011-925d-e07633d9993f";
+
+        //ACT
+        var response = mvc.perform( //performa uma requisição
+            post(url) //verbo GET na rota
+                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
+        ).andReturn().getResponse(); //a response da requisição
+
+        //ASSERT
+        Assertions.assertEquals(403, response.getStatus());
+
+        //ACT
+        response = mvc.perform( //performa uma requisição
+            put(url) //verbo GET na rota
+                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
+        ).andReturn().getResponse(); //a response da requisição
+
+        //ASSERT
+        Assertions.assertEquals(403, response.getStatus());
+
+        //ACT
+        response = mvc.perform( //performa uma requisição
+            delete(url) //verbo GET na rota
+                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
+        ).andReturn().getResponse(); //a response da requisição
+
+        //ASSERT
+        Assertions.assertEquals(403, response.getStatus());
+    }
+
+
+    @Test
     void anyEndPointVerboGetQuandoNaoEstaAutenticadoEspera403Forbidden() throws Exception {
         //ARRANGE + ACT + ASSERT
         this.mvc.perform(get("/any"))
