@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
     onde se avalia se o resultado obtido após a ação está de acordo com o que se esperava do teste. Caso haja alguma
     discrepância entre o resultado real e o esperado, o teste falhará.
  */
-//TODO: ver pq não consegue injetar a EmailService
+
 @SpringBootTest (classes = ProdutosApplication.class) //indica que vai rodar o teste no container Spring Boot (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
 @ActiveProfiles("test") //indica o profile que o Spring Boot deve utilizar para passar os testes
 public class ProdutoServiceIntegracaoTest {
