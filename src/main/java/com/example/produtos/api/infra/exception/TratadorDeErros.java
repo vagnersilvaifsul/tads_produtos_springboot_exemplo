@@ -31,6 +31,16 @@ public class TratadorDeErros extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().build();
     }
 
+    @ExceptionHandler(ValidacaoEmailJaCadastradoException.class)
+    public ResponseEntity trataErro400(ValidacaoEmailJaCadastradoException ex){ //400 - Bad Request para Erro de Validação
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ValidacaoEmailAindaNaoConfirmadoException.class)
+    public ResponseEntity trataErro400(ValidacaoEmailAindaNaoConfirmadoException ex){ //400 - Bad Request para Erro de Validação
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
     private record ErroValidation(
         String campo,
         String mensagem) {

@@ -26,6 +26,7 @@ public class UsuarioService {
     public Usuario insert(Usuario usuario) {
         Assert.isNull(usuario.getId(),"Não foi possível inserir o registro");
 
+        //validações
         validacoes.forEach(v -> v.validar(usuario));
 
         var usuarioSalvo = rep.save(usuario);
