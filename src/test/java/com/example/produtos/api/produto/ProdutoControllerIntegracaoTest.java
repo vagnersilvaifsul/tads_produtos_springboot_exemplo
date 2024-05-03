@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
     Utiliza como dependência principal a classe TestRestTemplate (do Spring), implementada na superclasse, BaseAPIIntegracaoTest.
  */
 
-@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //indica que vai rodar o teste no container Spring Boot (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
+@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //carrega o Context do app em um container Spring Boot com um servidor web (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
 @ActiveProfiles("test") //indica o profile que o Spring Boot deve utilizar para passar os testes
 public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
 

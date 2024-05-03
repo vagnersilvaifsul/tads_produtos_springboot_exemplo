@@ -12,27 +12,28 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest //precisa do container para rodar o controller (pq tem que rodar no servidor)
-@AutoConfigureMockMvc //autoconfigura o Spring Boot Web Mockado (nos entrega um container com um Servlet)
+@SpringBootTest //carrega o Context do app em um container Spring Boot
+@AutoConfigureMockMvc //autoconfigura o Spring Boot Web, modo Mockado (o que siginifica nos entregar um container com um Servlet, sem o servidor web)
 @ActiveProfiles("test")
 class SecurityConfigTest {
 
-    @Autowired //as anotações @SpringBootTest + @AutoConfigureMockMvc permitem realizar essa injeção
-    private MockMvc mvc; //objeto injetado para realizar a chamada no end-point
+    @Autowired //@AutoConfigureMockMvc nos permite injetar esse Bean
+    private MockMvc mvc; //Elimina a necessidade de um servidor e nos permite realizar chamadas "Mockadas" nos end-points
 
     @Test
-    void endpointLoginComUsuarioExistenteESenhaCorretaEspera200Ok() throws Exception {
+    void endpointLoginQuandoUsuarioExistenteESenhaCorretaEspera200Ok() throws Exception {
         //ARRANGE
-        String json = """
+        var json = """
             {
               "email": "admin@email.com",
               "senha": "123"
             }
             """;
+        var url = "/api/v1/login";
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            post("/api/v1/login") //verbo POST na rota
+            post(url) //verbo na rota
                 .content(json) //o body da requisição
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
@@ -43,18 +44,19 @@ class SecurityConfigTest {
 
 
     @Test
-    void endpointLoginComUsuarioInexistenteEspera400() throws Exception {
+    void endpointLoginQuandoUsuarioInexistenteEspera400BadRequest() throws Exception {
         //ARRANGE
-        String json = """
+        var json = """
             {
               "email": "admin",
               "senha": "123"
             }
             """;
+        var url = "/api/v1/login";
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            post("/api/v1/login") //verbo POST na rota
+            post(url) //verbo na rota
                 .content(json) //o body da requisição
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
@@ -64,18 +66,19 @@ class SecurityConfigTest {
     }
 
     @Test
-    void endpointLoginComUsuarioExistenteESenhaIncorretaEspera403() throws Exception {
+    void endpointLoginQuandoUsuarioExistenteESenhaIncorretaEspera403() throws Exception {
         //ARRANGE
-        String json = """
+        var json = """
             {
               "email": "admin@email.com",
               "senha": "123456"
             }
             """;
+        var url = "/api/v1/login";
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            post("/api/v1/login") //verbo POST na rota
+            post(url) //verbo na rota
                 .content(json) //o body da requisição
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
@@ -85,18 +88,19 @@ class SecurityConfigTest {
     }
 
     @Test
-    void endpointCadastrarVerboPostComBodyIncorretoEspera400BadRequest() throws Exception {
+    void endpointCadastrarQuandoVerboPostComBodyIncorretoEspera400BadRequest() throws Exception {
         //ARRANGE
-        String json = """
+        var json = """
             {
               "email": "adminemail",
               "senha": "123"
             }
             """;
+        var url = "/api/v1/usuarios/cadastrar";
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            post("/api/v1/usuarios/cadastrar") //verbo POST na rota
+            post(url) //verbo na rota
                 .content(json) //o body da requisição
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
@@ -106,26 +110,33 @@ class SecurityConfigTest {
     }
 
     @Test
-    void endpointCadastrarVerboGetEspera403Forbidden() throws Exception {
-        //ARRANGE + ACT + ASSERT
-        this.mvc.perform(get("/api/v1/usuarios/cadastrar"))
-            .andExpect(status().isForbidden());
-    }
-
-    @Test
-    void endpointCadastrarVerboPutComBodyCorretoEspera403Forbidden() throws Exception {
+    void endpointCadastrarQuandoVerboGetPutEDeleteEspera403Forbidden() throws Exception {
         //ARRANGE
-        String json = """
+        var json = """
             {
               "email": "admin@email.com",
               "senha": "123"
             }
             """;
+        var url = "/api/v1/usuarios/cadastrar";
+
+        //ACT + ASSERT
+        this.mvc.perform(get(url))
+            .andExpect(status().isForbidden());
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            put("/api/v1/usuarios/cadastrar") //verbo PUT na rota
+            put(url) //verbo na rota
                 .content(json) //o body da requisição
+                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
+        ).andReturn().getResponse(); //a response da requisição
+
+        //ASSERT
+        Assertions.assertEquals(403, response.getStatus());
+
+        //ACT
+        response = mvc.perform( //performa uma requisição
+            delete(url) //verbo na rota
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
 
@@ -134,13 +145,13 @@ class SecurityConfigTest {
     }
 
     @Test
-    void endPointConfirmarEmailVerboGetTokenValidoEspera200Ok() throws Exception {
+    void endPointConfirmarEmailQuandoVerboGetETokenValidoEspera200Ok() throws Exception {
         //ARRANGE
-        String url = "/confirmar-email?token=aecc73b7-dae5-4011-925d-e07633d9993f";
+        var url = "/confirmar-email?token=aecc73b7-dae5-4011-925d-e07633d9993f";
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            get(url) //verbo GET na rota
+            get(url) //verbo na rota
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
 
@@ -149,13 +160,13 @@ class SecurityConfigTest {
     }
 
     @Test
-    void endPointConfirmarEmailVerboGetTokenInvalidoEspera400BadRequest() throws Exception {
+    void endPointConfirmarEmailQuandoVerboGetETokenInvalidoEspera400BadRequest() throws Exception {
         //ARRANGE
-        String url = "/confirmar-email?token=token_invalido";
+        var url = "/confirmar-email?token=token_invalido";
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            get(url) //verbo GET na rota
+            get(url) //verbo na rota
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
 
@@ -164,13 +175,13 @@ class SecurityConfigTest {
     }
 
     @Test
-    void endPointConfirmarEmailVerboPostPutEDeleteTokenValidoEspera403Forbidden() throws Exception {
+    void endPointConfirmarEmailQuandoVerboPostPutEDeleteETokenValidoEspera403Forbidden() throws Exception {
         //ARRANGE
-        String url = "/confirmar-email?token=token=aecc73b7-dae5-4011-925d-e07633d9993f";
+        var url = "/confirmar-email?token=token=aecc73b7-dae5-4011-925d-e07633d9993f";
 
         //ACT
         var response = mvc.perform( //performa uma requisição
-            post(url) //verbo GET na rota
+            post(url) //verbo na rota
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
 
@@ -179,7 +190,7 @@ class SecurityConfigTest {
 
         //ACT
         response = mvc.perform( //performa uma requisição
-            put(url) //verbo GET na rota
+            put(url) //verbo na rota
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
 
@@ -188,7 +199,7 @@ class SecurityConfigTest {
 
         //ACT
         response = mvc.perform( //performa uma requisição
-            delete(url) //verbo GET na rota
+            delete(url) //verbo na rota
                 .contentType(MediaType.APPLICATION_JSON) //o header Content-type
         ).andReturn().getResponse(); //a response da requisição
 
@@ -198,52 +209,46 @@ class SecurityConfigTest {
 
 
     @Test
-    void anyEndPointVerboGetQuandoNaoEstaAutenticadoEspera403Forbidden() throws Exception {
-        //ARRANGE + ACT + ASSERT
-        this.mvc.perform(get("/any"))
-            .andExpect(status().isForbidden());
-    }
-
-    @Test
-    void anyEndPointVerboPostQuandoNaoEstaAutenticadoEspera403Forbidden() throws Exception {
+    void endPointProdutosQuandoVerboGetPostPutDeleteENaoEstaAutenticadoEspera403Forbidden() throws Exception {
         //ARRANGE
-        String json = """
+        var url = "/api/v1/produtos";
+        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgUHJvZHV0b3MgRXhlbXBsbyBkZSBUQURTIiwic3ViIjoiYWRtaW5AZW1haWwuY29tIiwiaWF0IjoxNzE0NzYxMDMxfQ.aQCggW0xCjEtsHDqJGxeu-5lkrrevFrjLZSl9aHDTrI";
+        var body = """
             {
-              "email": "",
-              "senha": ""
+              "key": "value",
+              "key2": "value2"
             }
             """;
 
         //ACT + ASSERT
-        this.mvc.perform(post("/any")
-                .content(json)
-                .contentType(MediaType.APPLICATION_JSON))
+        this.mvc.perform(get(url)) //verbo na rota
             .andExpect(status().isForbidden());
-    }
 
-    @Test
-    void anyEndPointVerboPutQuandoNaoEstaAutenticadoEspera403Forbidden() throws Exception {
-        //ARRANGE
-        String json = """
-            {
-              "email": "",
-              "senha": ""
-            }
-            """;
+        //ACT
+        var response = mvc.perform( //performa uma requisição
+            post(url) //verbo na rota
+                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
+        ).andReturn().getResponse(); //a response da requisição
 
-        //ACT + ASSERT
-        this.mvc.perform(put("/any")
-                .content(json)
-                .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isForbidden());
-    }
+        //ASSERT
+        Assertions.assertEquals(403, response.getStatus());
 
-    @Test
-    void anyEndPointVerboDeleteQuandoNaoEstaAutenticadoEspera403Forbidden() throws Exception {
+        //ACT
+        response = mvc.perform( //performa uma requisição
+            put(url) //verbo na rota
+                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
+        ).andReturn().getResponse(); //a response da requisição
 
-        //ACT + ASSERT
-        this.mvc.perform(delete("/any")
-                .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isForbidden());
+        //ASSERT
+        Assertions.assertEquals(403, response.getStatus());
+
+        //ACT
+        response = mvc.perform( //performa uma requisição
+            delete(url) //verbo na rota
+                .contentType(MediaType.APPLICATION_JSON) //o header Content-type
+        ).andReturn().getResponse(); //a response da requisição
+
+        //ASSERT
+        Assertions.assertEquals(403, response.getStatus());
     }
 }

@@ -31,11 +31,11 @@ import static org.junit.jupiter.api.Assertions.*;
     discrepância entre o resultado real e o esperado, o teste falhará.
  */
 
-@SpringBootTest (classes = ProdutosApplication.class) //indica que vai rodar o teste no container Spring Boot (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
+@SpringBootTest (classes = ProdutosApplication.class) //carrega o Context do app em um container Spring Boot, sem um servidor web, mas com JPA e acesso a banco de dados (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
 @ActiveProfiles("test") //indica o profile que o Spring Boot deve utilizar para passar os testes
 public class ProdutoServiceIntegracaoTest {
 
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
+    @Autowired //se carregou o Context do app é possível injetar qualquer Bean do projeto, como Services
     private ProdutoService service;
 
     @Test //esta anotação JUnit sinaliza que este método é um caso de teste
