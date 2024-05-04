@@ -28,7 +28,7 @@ Authorization: Bearer {{auth_token}}
   "valorDeVenda": 20.00,
   "estoque": 100
 }
-> {% client.global.set("location_post", response.headers.valueOf("location")); %}
+> {% client.global.set("header_location", response.headers.valueOf("location")); %}
 
 
 ###
@@ -46,7 +46,7 @@ Authorization: Bearer {{auth_token}}
 
 
 ###
-PUT {{location_post}}
+PUT {{header_location}}
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
@@ -61,6 +61,6 @@ Authorization: Bearer {{auth_token}}
 
 
 ###
-DELETE {{location_post}}
+DELETE {{header_location}}
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
