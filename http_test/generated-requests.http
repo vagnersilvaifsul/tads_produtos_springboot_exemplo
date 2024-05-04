@@ -1,0 +1,66 @@
+### Authorization by token, part 1. Retrieve and save token.
+POST http://localhost:8080/api/v1/login
+Content-Type: application/json
+
+{
+  "email": "admin@email.com",
+  "senha": "123"
+}
+
+> {% client.global.set("auth_token", response.body.token); %}
+
+
+### Authorization by token, part 2. Use token to authorize.
+GET http://localhost:8080/api/v1/produtos
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+###
+POST http://localhost:8080/api/v1/produtos
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "nome": "Teste Http Request",
+  "descricao": "Desc Teste Http Request",
+  "valorDeCompra": 10.00,
+  "valorDeVenda": 20.00,
+  "estoque": 100
+}
+> {% client.global.set("location_post", response.headers.valueOf("location")); %}
+
+
+###
+@nome = arroz
+GET http://localhost:8080/api/v1/produtos/nome/{{nome}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+###
+@id =1
+GET http://localhost:8080/api/v1/produtos/{{id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+###
+PUT {{location_post}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "nome": "Modificado",
+  "descricao": "Modificado",
+  "valorDeCompra": 15.00,
+  "valorDeVenda": 25.00,
+  "estoque": 500,
+  "situacao": true
+}
+
+
+###
+DELETE {{location_post}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
