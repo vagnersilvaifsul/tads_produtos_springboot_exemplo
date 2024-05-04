@@ -32,6 +32,6 @@ public class SpringDocConfiguration {
                     .email("tads@ifsul.edu.br"))
                 .license(new License()
                     .name("Apache 2.0")
-                    .url("http://voll.med/api/licenca")));
+                    .url("http://localhost:8080/api/licenca")));
     }
 }
