@@ -1,9 +1,7 @@
 package com.example.produtos.api.usuario;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,9 +10,9 @@ import java.util.Collection;
 import java.util.List;
 @Entity(name = "User")
 @Table(name = "usuarios")
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class Usuario implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

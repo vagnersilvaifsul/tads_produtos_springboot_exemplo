@@ -8,9 +8,10 @@ import java.util.Collection;
 
 @Entity(name="Cliente")
 @Table(name = "clientes")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Cliente {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

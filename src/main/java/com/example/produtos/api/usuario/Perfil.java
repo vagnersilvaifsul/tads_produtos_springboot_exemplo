@@ -10,9 +10,9 @@ import java.util.List;
 
 @Entity(name = "Perfil")
 @Table(name = "perfis")
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 public class Perfil implements GrantedAuthority {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

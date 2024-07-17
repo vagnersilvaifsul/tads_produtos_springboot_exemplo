@@ -2,9 +2,7 @@ package com.example.produtos.api.produto;
 
 import com.example.produtos.api.item.Item;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.modelmapper.ModelMapper;
 
 import java.math.BigDecimal;
@@ -17,9 +15,10 @@ import java.util.Collection;
 
 @Entity(name = "Produto")
 @Table(name = "produtos")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Produto {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

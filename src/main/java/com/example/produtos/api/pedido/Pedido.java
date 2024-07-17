@@ -4,9 +4,7 @@ package com.example.produtos.api.pedido;
 import com.example.produtos.api.cliente.Cliente;
 import com.example.produtos.api.item.Item;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -14,9 +12,10 @@ import java.util.Collection;
 
 @Entity(name = "Pedido")
 @Table(name = "pedidos")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Pedido {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
