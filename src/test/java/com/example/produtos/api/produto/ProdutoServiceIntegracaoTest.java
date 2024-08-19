@@ -16,7 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
     Realiza o teste de integração da unidade ProdutoService.
 
     Exitem dois padrões amplamente aceitos para escrever testes: Triple A e GWT.
-    O padrão GWT é aplicado em BDD (Behavior-Driven Development).
+    O padrão GWT (Given-When-Then, em português Dado-Quando-Então. Dado um conjunto de entradas - Quando a aplicação
+    faz uma ação X - Então é esperado Y) é aplicado em BDD (Behavior-Driven Development, Desenvolvimento Orientado ao Comportamento).
 
     ### Arrange, Act, Assert (AAA)
     O padrão AAA é amplamente utilizado e consiste em três etapas distintas:
