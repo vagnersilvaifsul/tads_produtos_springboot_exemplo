@@ -30,6 +30,30 @@ import static org.junit.jupiter.api.Assertions.*;
     c) Assert (Afirmar): Na última etapa, os resultados são verificados em relação ao comportamento esperado. É
     onde se avalia se o resultado obtido após a ação está de acordo com o que se esperava do teste. Caso haja alguma
     discrepância entre o resultado real e o esperado, o teste falhará.
+
+    Pequeno Glossário:
+    Às vezes a sopa de letrinhas utilizadas na área de desenvolvimento de software pode causar alguma confusão. Para
+    esclarecer um pouco mais, segue alguns conceitos das metodologias ágeis:
+
+    + TLD (Test-Last Development): É o Desenvolvimento com Testes Posteriores. Desenvolve-se o software, depois o testa
+        para garantir sua qualidade.
+
+    + TDD (Test Driven Development): É o Desenvolvimento Orientado a Testes. Primeiro, cria-se o teste conforme o resultado
+        que se deseja atingir para determinada funcionalidade. Depois, se aprimora o código (com refinamentos sussecivos).
+        Geralmente é o próprio desenvolvedor que escreve os testes.
+
+    + BDD (Behavior Driven Development): é o Desenvolvimento Orientado ao Comportamento, cujos testes são baseados no
+        comportamento do software ao longo da sua vida útil. Com o BDD, a principal diferença é que as equipes de QA
+        escrevem os testes, necessários para passar, antes que o desenvolvimento possa marcar um recurso como concluído.
+
+    + DDD (Domain-Driven Design): Design Orientado pelo Domínio é uma abordagem para o desenvolvimento de software que
+        enfatiza a importância de entender profundamente o domínio do problema que está sendo resolvido. Utilizada para
+        desenvolvimento de softwares complexos, como os empresariais.
+
+    Ao analisar as metodologias descritas acima, considere que:
+        As empresas têm a necessidade de procurar e adotar técnicas e abordagens para o processo de desenvolvimento
+        de software, a fim de melhorarem as métricas de qualidade, reduzir a taxa de não cumprimento, aumentarem a
+        produtividade das equipes e, consequentemente, produzir software com qualidade.
  */
 
 @SpringBootTest (classes = ProdutosApplication.class) //carrega o Context do app em um container Spring Boot, sem um servidor web, mas com JPA e acesso a banco de dados
