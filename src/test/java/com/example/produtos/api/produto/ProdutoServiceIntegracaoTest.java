@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
     específico.
     b) Act (Ação): Nesta fase, a ação que se deseja testar é executada. Pode ser a chamada de um método, uma
     interação com a interface do usuário ou qualquer outra operação que seja o foco do teste.
-    c) Assert (Verificar): Na última etapa, os resultados são verificados em relação ao comportamento esperado. É
+    c) Assert (Afirmar): Na última etapa, os resultados são verificados em relação ao comportamento esperado. É
     onde se avalia se o resultado obtido após a ação está de acordo com o que se esperava do teste. Caso haja alguma
     discrepância entre o resultado real e o esperado, o teste falhará.
  */

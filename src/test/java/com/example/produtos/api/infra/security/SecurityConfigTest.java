@@ -12,6 +12,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/*
+    Se você nunca ouviu falar, Mocking é uma forma de teste onde, em vez de verificar os resultados, verificamos os
+    métodos invocados.
+ */
+
 @SpringBootTest //Carrega o Context do app em um container Spring Boot
 @AutoConfigureMockMvc //Autoconfigura o Spring Boot Web, modo Mockado (o que siginifica nos entregar um container com um Servlet, mas sem o servidor web)
 @ActiveProfiles("test")
