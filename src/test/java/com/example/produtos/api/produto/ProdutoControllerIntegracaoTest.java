@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /*
     Realiza o teste de integração da unidade ProdutoController.
-    Utiliza como dependência principal a classe TestRestTemplate (do Spring), implementada na superclasse, BaseAPIIntegracaoTest.
+    Utiliza como dependência principal a classe TestRestTemplate (do Spring), implementada na superclasse BaseAPIIntegracaoTest.
  */
 
-@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //carrega o Context do app em um container Spring Boot com um servidor web (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
+@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //carrega o Context do app em um container Spring Boot com um servidor web
 @ActiveProfiles("test") //indica o profile que o Spring Boot deve utilizar para passar os testes
 public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
 
@@ -51,9 +51,9 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
             new ParameterizedTypeReference<>() {});
     }
 
-    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
+    @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
     @DisplayName("Espera uma página, testa se tem 5 objetos, busca por página, de tamanho 5, e testa se tem 5 objetos")
-    public void selectAllEsperaUmaPaginaCom5ObjetosEUmaPaginaDe5Objetos() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações
+    public void selectAllEsperaUmaPaginaCom5ObjetosEUmaPaginaDe5Objetos() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações.
         // ACT
         var page = getProdutosPageble("/api/v1/produtos").getBody();
 
@@ -61,7 +61,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         assertNotNull(page);
         assertEquals(5, page.stream().count());
 
-        // ACT
+        // ACT - testa uma requisição com os parametrôs page e size
         page = getProdutosPageble("/api/v1/produtos?page=0&size=5").getBody();
 
         // ASSERT (testa se retorna o tamanho de página solicitado)
@@ -69,7 +69,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         assertEquals(5, page.stream().count());
     }
 
-    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
+    @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
     public void selectByNomeEsperaUmObjetoPorNomePesquisado() {
         // ACT + ASSERT
         assertEquals(1, getProdutosList("/api/v1/produtos/nome/arroz").getBody().size());
@@ -82,7 +82,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         assertEquals(HttpStatus.NO_CONTENT, getProdutosList("/api/v1/produtos/nome/xxx").getStatusCode());
     }
 
-    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
+    @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
     public void selectByIdEsperaUmObjetoPorIdPesquisadoENotFoudParaIdInexistente() {
         // ACT + ASSERT
         assertNotNull(getProduto("/api/v1/produtos/1"));
@@ -93,7 +93,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         assertEquals(HttpStatus.NOT_FOUND, getProduto("/api/v1/produtos/100000").getStatusCode());
     }
 
-    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
+    @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
     public void testInsertEspera204CreatedE404ENotFound() {
         // ARRANGE
         var ProdutoDTOPost = new ProdutoDTOPost(
@@ -109,8 +109,6 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
 
         // ASSERT
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-
-        // ARRANGE
         var location = response.getHeaders().get("location").get(0);
         var p = getProduto(location).getBody();
         assertNotNull(p);
@@ -119,13 +117,15 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         assertEquals(new BigDecimal("10.00"), p.valorDeVenda());
         assertEquals(Integer.valueOf(100), p.estoque());
         assertEquals(true, p.situacao());
+
+        // ACT
         delete(location, null);
 
         // ASSERT
         assertEquals(HttpStatus.NOT_FOUND, getProduto(location).getStatusCode());
     }
 
-    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
+    @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
     public void testUpdateEspera200OkE404ENotFound() {
         // ARRANGE
         var ProdutoDTOPost = new ProdutoDTOPost(
@@ -175,7 +175,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
 
     }
 
-    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
+    @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
     public void testDeleteEspera200OkE404NotFound() {
         // ARRANGE
         var produto = new Produto();
@@ -201,7 +201,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         assertEquals(HttpStatus.NOT_FOUND, getProduto(location).getStatusCode());
     }
 
-    @Test //esta anotação JUnit sinaliza que este método é um caso de teste
+    @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
     public void testGetNotFoundEspera404NotFound() {
         // ARRANGE + ACT
         var response = getProduto("/api/v1/produtos/1100");

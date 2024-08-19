@@ -22,7 +22,7 @@ import static org.springframework.http.HttpMethod.*;
     Ela pode ser reutilizada para ralizar teste de integração de qualquer um dos controllers do proejto.
  */
 
-@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //indica que vai rodar o teste no container Spring Boot (Por isso é um teste de integração, pois utiliza o ambiente real, ao invés de um Mock)
+@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //indica que vai rodar o teste no container Spring Boot
 public abstract class BaseAPIIntegracaoTest {
     @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     protected TestRestTemplate rest; //faz chamadas para APIs reais, no caso qualquer filha desta classe
@@ -34,7 +34,7 @@ public abstract class BaseAPIIntegracaoTest {
     private String jwtToken = "";
 
 
-    //Método para requisitar o token para um user especificado (loga o usuário e obtém o token)
+    //Método para logar um usuário e obter o token
     @BeforeEach //essa anotação faz com que o método seja executado antes dos demais, no setup
     public void setupTest() {
         // Le usuário
@@ -54,21 +54,21 @@ public abstract class BaseAPIIntegracaoTest {
         return headers;
     }
 
-    //metodo genérico para requisições com o verbo POST
+    //Método genérico para requisições com o verbo POST
     protected  <T> ResponseEntity<T> post(String url, Object body, Class<T> responseType) {
         HttpHeaders headers = getHeaders();
 
         return rest.exchange(url, POST, new HttpEntity<>(body, headers), responseType);
     }
 
-    //metodo genérico para requisições com o verbo PUT
+    //Método genérico para requisições com o verbo PUT
     protected <T> ResponseEntity<T> put(String url, Object body, Class<T> responseType) {
         HttpHeaders headers = getHeaders();
 
         return rest.exchange(url, PUT, new HttpEntity<>(body, headers), responseType);
     }
 
-    //metodo genérico para requisições com o verbo GET
+    //Método genérico para requisições com o verbo GET
     protected <T> ResponseEntity<T> get(String url, Class<T> responseType) {
 
         HttpHeaders headers = getHeaders();
@@ -76,7 +76,7 @@ public abstract class BaseAPIIntegracaoTest {
         return rest.exchange(url, GET, new HttpEntity<>(headers), responseType);
     }
 
-    //metodo genérico para requisições com o verbo DELETE
+    //Método genérico para requisições com o verbo DELETE
     protected <T> ResponseEntity<T> delete(String url, Class<T> responseType) {
 
         HttpHeaders headers = getHeaders();
