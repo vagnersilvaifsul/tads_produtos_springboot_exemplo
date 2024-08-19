@@ -12,12 +12,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest //carrega o Context do app em um container Spring Boot
-@AutoConfigureMockMvc //autoconfigura o Spring Boot Web, modo Mockado (o que siginifica nos entregar um container com um Servlet, sem o servidor web)
+@SpringBootTest //Carrega o Context do app em um container Spring Boot
+@AutoConfigureMockMvc //Autoconfigura o Spring Boot Web, modo Mockado (o que siginifica nos entregar um container com um Servlet, mas sem o servidor web)
 @ActiveProfiles("test")
 class SecurityConfigTest {
 
-    @Autowired //@AutoConfigureMockMvc nos permite injetar esse Bean
+    @Autowired //@AutoConfigureMockMvc (anotação na linha 16) nos permite injetar esse Bean
     private MockMvc mvc; //Elimina a necessidade de um servidor e nos permite realizar chamadas "Mockadas" nos end-points
 
     @Test
