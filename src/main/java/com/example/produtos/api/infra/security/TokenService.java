@@ -9,6 +9,7 @@ import com.example.produtos.api.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -25,7 +26,8 @@ public class TokenService {
             return JWT.create()
                 .withIssuer("API Produtos Exemplo de TADS")
                 .withSubject(usuario.getUsername())
-                .withIssuedAt(LocalDateTime.now().toInstant(ZoneOffset.of("-03:00")))
+                .withIssuedAt(Instant.now()) //gerado em
+                .withExpiresAt(Instant.now().plus(Duration.ofHours(2))) //expira em
                 .sign(algorithm);
         } catch (JWTCreationException exception){
             // Invalid Signing configuration / Couldn't convert Claims.
@@ -46,9 +48,4 @@ public class TokenService {
             throw new TokenInvalidoException("Token JWT inválido ou expirado.");
         }
     }
-
-    private Instant dataExpiracao() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00")); //expira em 2 horas
-    }
-
 }
