@@ -3,7 +3,10 @@ package com.example.produtos.api.autenticacao;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public record UsuarioDTO(
+/**
+ * DTO for {@link com.example.produtos.api.usuario.Usuario}
+ */
+public record UsuarioAutenticacaoDTO(
     @Email @NotBlank
     String email,
     @NotBlank

@@ -1,7 +1,7 @@
 package com.example.produtos.api.usuario.validacoes;
 
-import com.example.produtos.api.autenticacao.UsuarioDTO;
+import com.example.produtos.api.autenticacao.UsuarioAutenticacaoDTO;
 
 public interface ValidacaoLoginDoUsuario {
-    void validar(UsuarioDTO usuarioDTO);
+    void validar(UsuarioAutenticacaoDTO usuarioAutenticacaoDTO);
 }

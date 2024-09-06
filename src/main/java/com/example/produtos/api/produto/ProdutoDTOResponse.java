@@ -2,6 +2,9 @@ package com.example.produtos.api.produto;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO for {@link Produto}
+ */
 public record ProdutoDTOResponse(
     Long id,
     String nome,

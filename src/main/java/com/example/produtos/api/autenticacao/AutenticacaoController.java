@@ -32,7 +32,7 @@ public class AutenticacaoController {
     private List<ValidacaoLoginDoUsuario> validacoes;
 
     @PostMapping
-    public ResponseEntity<TokenJwtDTO> efetuaLogin(@Valid @RequestBody UsuarioDTO data){
+    public ResponseEntity<TokenJwtDTO> efetuaLogin(@Valid @RequestBody UsuarioAutenticacaoDTO data){
         var authenticationDTO = new UsernamePasswordAuthenticationToken(data.email(), data.senha()); //converte o DTO em DTO do Spring Security
 
         //validações
