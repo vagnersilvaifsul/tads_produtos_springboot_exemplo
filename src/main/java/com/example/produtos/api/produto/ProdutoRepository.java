@@ -25,7 +25,7 @@ public interface ProdutoRepository extends JpaRepository<Produto,Long> {
         nossas próprias Query Speak (é o caso do SQL apresentado na anotação @Query). Ou seja, o Spring Data nos
         permite alternar entre Domain Speak e Query Speak rapidamente. É muita flexibilidade!
      */
-    //Exemplo de aplicação de Query Speak no Padrão Repository
+    //Exemplo de aplicação de Domain Speak no Padrão Repository ... o @Query é opcional (coloquei aqui para demonstração de seu uso)
     @Query(value = "SELECT p FROM Produto p where p.nome like ?1 order by p.nome")
     List<Produto> findByNome(String nome);
 
