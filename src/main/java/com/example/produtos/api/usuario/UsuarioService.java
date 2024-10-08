@@ -11,8 +11,12 @@ import java.util.List;
 @Service //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de serviço de dados
 public class UsuarioService {
 
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private UsuarioRepository rep;
+
+    //indica ao Spring Boot que ele deve injetar estas dependências para a classe funcionar
+    public UsuarioService(UsuarioRepository rep){
+        this.rep = rep;
+    }
 
     @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private TokenConfirmacaoEmailRepository tokenConfirmacaoEmailRepository;

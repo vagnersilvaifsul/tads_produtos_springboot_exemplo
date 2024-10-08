@@ -5,7 +5,6 @@ import com.example.produtos.api.infra.security.TokenService;
 import com.example.produtos.api.usuario.Usuario;
 import com.example.produtos.api.usuario.validacoes.ValidacaoLoginDoUsuario;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,14 +21,15 @@ import java.util.Map;
 @RequestMapping("api/v1/login") //Endpoint padrão da classe
 public class AutenticacaoController {
 
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private AuthenticationManager manager; //o gerenciador de autenticação é quem dispara o loadUserByUsername (isto é, é interno do Spring Security, tem que usar ele)
-
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private TokenService tokenService;
-
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private List<ValidacaoLoginDoUsuario> validacoes;
+
+    public AutenticacaoController(AuthenticationManager manager, TokenService tokenService, List<ValidacaoLoginDoUsuario> validacoes){
+        this.manager = manager;
+        this.tokenService = tokenService;
+        this.validacoes = validacoes;
+    }
 
     @PostMapping
     public ResponseEntity<TokenJwtDTO> efetuaLogin(@Valid @RequestBody UsuarioAutenticacaoDTO data){

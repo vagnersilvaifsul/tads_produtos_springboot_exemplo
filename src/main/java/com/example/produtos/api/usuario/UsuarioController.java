@@ -48,7 +48,7 @@ import java.util.Map;
 
  */
 
-@RestController //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de controle API REST
+@RestController //Indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de controle API REST
 //Note que @RequestMapping("api/v1/usuarios") foi propositalmente omitido nessa classe. Assim não será exposto o endpoint ao confirmar um email no navegador.
 public class UsuarioController {
     private final UsuarioService service;

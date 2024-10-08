@@ -1,6 +1,5 @@
 package com.example.produtos.api.produto;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,13 @@ import java.util.Optional;
 @Service //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean da camada de serviço de dados
 public class ProdutoService {
 
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private ProdutoRepository rep;
+
+    //A classe ProdutoService depende de ProdutoRepository. Isso é o que está definido nesse construtor.
+    //Ao analisar essa situação o Spring Boot irá INJETAR a ProdutoRepository, que ele escaneou a partir da anotação implícita @Repository na classe ProdutoRepository
+    public ProdutoService(ProdutoRepository rep){
+        this.rep = rep;
+    }
 
     public Page<Produto> getProdutos(Pageable paginacao) {
         return rep.findAll(paginacao);

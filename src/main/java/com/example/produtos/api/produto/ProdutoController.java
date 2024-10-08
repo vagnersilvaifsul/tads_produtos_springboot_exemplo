@@ -1,7 +1,6 @@
 package com.example.produtos.api.produto;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -31,8 +30,13 @@ import java.util.stream.Collectors;
 @RequestMapping("api/v1/produtos") //Endpoint padrão da classe
 public class ProdutoController {
 
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private ProdutoService service;
+
+    //A classe ProdutoController depende de ProdutoService. Isso é o que está definido nesse construtor.
+    //Ao analisar essa situação o Spring Boot irá INJETAR a ProdutoService, que ele escaneou a partir da anotação @Service na classe ProdutoService
+    public ProdutoController(ProdutoService service){
+        this.service = service;
+    }
 
     @GetMapping
     //O PageableDefault é sobrescrito pelos parâmetros da requisição (ou seja, a requisição é mandatória)
