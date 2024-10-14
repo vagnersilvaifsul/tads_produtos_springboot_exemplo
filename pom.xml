@@ -26,6 +26,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+
         <!-- Para o Desenvolvimento (ferramentas para o dev) -->
         <!-- https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.devtools -->
         <dependency>
@@ -81,7 +86,7 @@
 
         <!-- Para Testes do app-->
         <!--
-            O que vem em no spring-boot-starter-test?
+            O que vem no spring-boot-starter-test?
             Spring Boot Test: utilitários de teste orientados ao Spring Boot
             JSONPath: a linguagem de consulta para documentos JSON
             AssertJ: API fluente para declaração de resultados
@@ -124,7 +129,7 @@
             <version>2.0.2</version>
         </dependency>
 
-        <!-- Serviço de Email do Spring -->
+        <!-- Serviço de E-mail do Spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>

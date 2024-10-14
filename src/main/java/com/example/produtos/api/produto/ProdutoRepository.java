@@ -2,6 +2,7 @@ package com.example.produtos.api.produto;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
     Repository serve para indicar ao Spring Boot que a classe que a extende deve ser inserida no Context do
     aplicativo pelo Spring Boot (é por isso que não precisa inserir uma anotação acima da classe).
  */
+@RepositoryRestResource(exported = false)
 public interface ProdutoRepository extends JpaRepository<Produto,Long> {
     /*
         O Padrão Repository do Spring Data, apesar de nos fornecer uma inferface Domain Speak, inteligente o
