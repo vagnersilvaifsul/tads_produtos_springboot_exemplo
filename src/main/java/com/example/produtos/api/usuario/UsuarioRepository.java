@@ -1,6 +1,7 @@
 package com.example.produtos.api.usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /*
   A grande vantagem do Padrão Repository reside no fato de ele permitir montar consultas pelo padrão de nome do método
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /*
     Esta classe implementa o CRUD de usuários. A autenticação fica a cargo da AutenticacaoRepository.
  */
+@RepositoryRestResource(exported = false)
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     Boolean existsByEmail(String email);
 

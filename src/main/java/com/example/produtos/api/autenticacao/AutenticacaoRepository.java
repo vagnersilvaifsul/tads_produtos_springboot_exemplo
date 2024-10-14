@@ -2,6 +2,7 @@ package com.example.produtos.api.autenticacao;
 
 import com.example.produtos.api.usuario.Usuario;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /*
     Esta interce visa, única e exclusivamente, realizar a busca pelo usuário com UserDetails.
@@ -10,6 +11,7 @@ import org.springframework.data.repository.Repository;
     implementado (s)nela.
     A responsabilidade por CRUD de usuários fica a cargo da UsuarioRepository.
  */
+@RepositoryRestResource(exported = false)
 public interface AutenticacaoRepository extends Repository<Usuario,Long> {
     Usuario findByEmail(String email);
 }
