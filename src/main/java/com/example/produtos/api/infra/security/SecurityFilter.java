@@ -5,7 +5,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -16,17 +15,21 @@ import java.io.IOException;
 @Component //indica que essa classe deve ser adicionada ao Contexto do aplicativo como um Bean de Configuração
 public class SecurityFilter extends OncePerRequestFilter {
 
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private TokenService tokenService;
-    @Autowired //indica ao Spring Boot que ele deve injetar essa dependência para a classe funcionar
     private AutenticacaoRepository repository;
+
+    //O SB identifica as dependências e injeta a partir do Context do app
+    public SecurityFilter(TokenService tokenService, AutenticacaoRepository repository) {
+        this.tokenService = tokenService;
+        this.repository = repository;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //recupera o token do request
         var tokenJWT = recuperarToken(request);
         //valida o token
-        if(tokenJWT != null){ //se a rota tem o token (no caso, qualquer rota, exceto /login)
+        if (tokenJWT != null) { //se a rota tem o token (no caso, qualquer rota, exceto /login)
             var subject = tokenService.getSubject(tokenJWT);
             //autentica o subject (usuário que fez login, pois o Spring está configurado como Stateless)
             var usuario = repository.findByEmail(subject); //recupera o objeto usuário
