@@ -40,7 +40,7 @@ public class ProdutoController {
     @GetMapping
     //O PageableDefault é sobrescrito pelos parâmetros da requisição (ou seja, a requisição é mandatória)
     //Experimente fazer a requisição assim: /api/v1/produtos?size=2&sort=nome,desc (verá que sobrescreve o PageableDefault)
-    public ResponseEntity<Page<ProdutoDTOResponse>> selectAll(@PageableDefault(size = 50, sort = "nome") Pageable paginacao) {
+    public ResponseEntity<Page<ProdutoDTOResponse>> findAll(@PageableDefault(size = 50, sort = "nome") Pageable paginacao) {
         return ResponseEntity.ok(produtoRepository.findAll(paginacao).map(ProdutoDTOResponse::new));
     }
 
@@ -50,19 +50,19 @@ public class ProdutoController {
         if (optional.isPresent()) {
             return ResponseEntity.ok(new ProdutoDTOResponse(optional.get()));
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/nome/{nome}")
     public ResponseEntity<List<ProdutoDTOResponse>> finByNome(@PathVariable("nome") String nome) {
-        var produtos = produtoRepository.findByNome(nome);
+        var produtos = produtoRepository.findByNome(nome + "%");
         return produtos.isEmpty() ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.ok(produtos.stream().map(ProdutoDTOResponse::new).toList());
     }
 
     @PostMapping
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<URI> insert(@RequestBody ProdutoDTOPost produtoDTO, UriComponentsBuilder uriBuilder) {
         var p = produtoRepository.save(new Produto(
                 null,

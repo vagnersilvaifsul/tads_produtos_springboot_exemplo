@@ -5,10 +5,13 @@ import com.example.produtos.BaseAPIIntegracaoTest;
 import com.example.produtos.CustomPageImpl;
 import com.example.produtos.ProdutosApplication;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test; //jupiter indica que é JUnit 5
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
@@ -22,7 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
     Utiliza como dependência principal a classe TestRestTemplate (do Spring), implementada na superclasse BaseAPIIntegracaoTest.
  */
 
-@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //carrega o Context do app em um container Spring Boot com um servidor web
+@SpringBootTest(classes = ProdutosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//carrega o Context do app em um container Spring Boot com um servidor web
 @ActiveProfiles("test") //indica o profile que o Spring Boot deve utilizar para passar os testes
 public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
 
@@ -35,25 +39,27 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         var headers = getHeaders();
 
         return rest.exchange(
-            url,
-            HttpMethod.GET,
-            new HttpEntity<>(headers),
-            new ParameterizedTypeReference<>() {});
+                url,
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                new ParameterizedTypeReference<>() {
+                });
     }
 
     private ResponseEntity<List<ProdutoDTOResponse>> getProdutosList(String url) {
         var headers = getHeaders();
 
         return rest.exchange(
-            url,
-            HttpMethod.GET,
-            new HttpEntity<>(headers),
-            new ParameterizedTypeReference<>() {});
+                url,
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                new ParameterizedTypeReference<>() {
+                });
     }
 
     @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
-    @DisplayName("Espera uma página, testa se tem 5 objetos, busca por página, de tamanho 5, e testa se tem 5 objetos")
-    public void selectAllEsperaUmaPaginaCom5ObjetosEUmaPaginaDe5Objetos() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações.
+    @DisplayName("Espera uma página com 5 objetos e uma página de 5 objetos")
+    public void findAllEsperaUmaPaginaCom5ObjetosEUmaPaginaDe5Objetos() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações.
         // ACT
         var page = getProdutosPageble("/api/v1/produtos").getBody();
 
@@ -70,7 +76,18 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
     }
 
     @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
-    public void selectByNomeEsperaUmObjetoPorNomePesquisado() {
+    public void findByIdEsperaUmObjetoPorIdPesquisadoENotFoudParaIdInexistente() {
+        // ACT + ASSERT
+        assertNotNull(getProduto("/api/v1/produtos/1"));
+        assertNotNull(getProduto("/api/v1/produtos/2"));
+        assertNotNull(getProduto("/api/v1/produtos/3"));
+        assertNotNull(getProduto("/api/v1/produtos/4"));
+        assertNotNull(getProduto("/api/v1/produtos/5"));
+        assertEquals(HttpStatus.NOT_FOUND, getProduto("/api/v1/produtos/100000").getStatusCode());
+    }
+
+    @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
+    public void findByNomeEsperaUmObjetoPorNomePesquisado() {
         // ACT + ASSERT
         assertEquals(1, getProdutosList("/api/v1/produtos/nome/arroz").getBody().size());
         assertEquals(1, getProdutosList("/api/v1/produtos/nome/erva").getBody().size());
@@ -83,25 +100,14 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
     }
 
     @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
-    public void selectByIdEsperaUmObjetoPorIdPesquisadoENotFoudParaIdInexistente() {
-        // ACT + ASSERT
-        assertNotNull(getProduto("/api/v1/produtos/1"));
-        assertNotNull(getProduto("/api/v1/produtos/2"));
-        assertNotNull(getProduto("/api/v1/produtos/3"));
-        assertNotNull(getProduto("/api/v1/produtos/4"));
-        assertNotNull(getProduto("/api/v1/produtos/5"));
-        assertEquals(HttpStatus.NOT_FOUND, getProduto("/api/v1/produtos/100000").getStatusCode());
-    }
-
-    @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
     public void testInsertEspera204CreatedE404ENotFound() {
         // ARRANGE
         var ProdutoDTOPost = new ProdutoDTOPost(
-            "Teste",
-            "Desc. do produto Teste",
-            new BigDecimal("5.00"),
-            new BigDecimal("10.00"),
-            100
+                "Teste",
+                "Desc. do produto Teste",
+                new BigDecimal("5.00"),
+                new BigDecimal("10.00"),
+                100
         );
 
         // ACT
@@ -129,11 +135,11 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
     public void testUpdateEspera200OkE404ENotFound() {
         // ARRANGE
         var ProdutoDTOPost = new ProdutoDTOPost(
-            "Teste",
-            "Desc. do produto Teste",
-            new BigDecimal("5.00"),
-            new BigDecimal("10.00"),
-            100
+                "Teste",
+                "Desc. do produto Teste",
+                new BigDecimal("5.00"),
+                new BigDecimal("10.00"),
+                100
         );
 
         var responsePost = post("/api/v1/produtos", ProdutoDTOPost, null);
@@ -148,12 +154,12 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         assertEquals(true, pDto.situacao());
         //prepara um DTO para o PUT
         var produtoDTOPut = new ProdutoDTOPut(
-            "Teste Modificado",
-            "Desc. do produto Teste Modificado",
-            new BigDecimal("20.00"),
-            new BigDecimal("50.00"),
-            500,
-            Boolean.FALSE
+                "Teste Modificado",
+                "Desc. do produto Teste Modificado",
+                new BigDecimal("20.00"),
+                new BigDecimal("50.00"),
+                500,
+                Boolean.FALSE
         );
 
         // ACT
