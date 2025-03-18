@@ -71,8 +71,7 @@ public class ProdutoController {
                 produtoDTO.valorDeVenda(),
                 produtoDTO.descricao(),
                 true,
-                produtoDTO.estoque(),
-                null
+                produtoDTO.estoque()
         ));
         var location = uriBuilder.path("api/v1/produtos/{id}").buildAndExpand(p.getId()).toUri();
         return ResponseEntity.created(location).build();
@@ -89,8 +88,7 @@ public class ProdutoController {
                     produtoDTO.valorDeVenda(),
                     produtoDTO.descricao(),
                     produtoDTO.situacao(),
-                    produtoDTO.estoque(),
-                    null
+                    produtoDTO.estoque()
             ));
             return ResponseEntity.ok(new ProdutoDTOResponse(p));
         }
