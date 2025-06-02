@@ -100,7 +100,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
     }
 
     @Test //Esta anotação JUnit sinaliza que este método é um caso de teste
-    public void testInsertEspera204CreatedE404ENotFound() {
+    public void testInsertEspera201CreatedE404ENotFound() {
         // ARRANGE
         var ProdutoDTOPost = new ProdutoDTOPost(
                 "Teste",
@@ -118,7 +118,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         var location = response.getHeaders().get("location").get(0);
         var p = getProduto(location).getBody();
         assertNotNull(p);
-        assertEquals("Teste", p.nome());
+        assertEquals("Testes", p.nome());
         assertEquals("Desc. do produto Teste", p.descricao());
         assertEquals(new BigDecimal("10.00"), p.valorDeVenda());
         assertEquals(Integer.valueOf(100), p.estoque());
