@@ -118,7 +118,7 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         var location = response.getHeaders().get("location").get(0);
         var p = getProduto(location).getBody();
         assertNotNull(p);
-        assertEquals("Testes", p.nome());
+        assertEquals("Teste", p.nome());
         assertEquals("Desc. do produto Teste", p.descricao());
         assertEquals(new BigDecimal("10.00"), p.valorDeVenda());
         assertEquals(Integer.valueOf(100), p.estoque());
