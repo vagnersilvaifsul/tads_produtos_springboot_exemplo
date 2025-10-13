@@ -31,6 +31,15 @@ public class Produto {
     private Boolean situacao;
     private Integer estoque;
 
+    public Produto(String nome, BigDecimal valorDeCompra, BigDecimal valorDeVenda, String descricao, Integer estoque) {
+        this.nome = nome;
+        this.valorDeCompra = valorDeCompra;
+        this.valorDeVenda = valorDeVenda;
+        this.descricao = descricao;
+        this.situacao = true;
+        this.estoque = estoque;
+    }
+
     public static Produto create(ProdutoDTOResponse p) {
         var modelMapper = new ModelMapper();
         return modelMapper.map(p, Produto.class);
