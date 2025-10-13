@@ -52,7 +52,7 @@ public class ProdutoController {
 
     @PostMapping
     //@Secured({"ROLE_ADMIN", "ROLE_USER"})
-    public ResponseEntity<URI> insert(@RequestBody ProdutoDTOPost produtoDTOPost, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<URI> insert(@Valid @RequestBody ProdutoDTOPost produtoDTOPost, UriComponentsBuilder uriBuilder) {
         var p = repository.save(new Produto(
                 produtoDTOPost.nome(),
                 produtoDTOPost.valorDeCompra(),
