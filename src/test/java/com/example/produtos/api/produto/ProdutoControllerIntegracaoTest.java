@@ -2,7 +2,6 @@ package com.example.produtos.api.produto;
 
 
 import com.example.produtos.BaseAPIIntegracaoTest;
-import com.example.produtos.CustomPageImpl;
 import com.example.produtos.ProdutosApplication;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,17 +34,6 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
         return get(url, ProdutoDTOResponse.class);
     }
 
-    private ResponseEntity<CustomPageImpl<ProdutoDTOResponse>> getProdutosPageble(String url) {
-        var headers = getHeaders();
-
-        return rest.exchange(
-                url,
-                HttpMethod.GET,
-                new HttpEntity<>(headers),
-                new ParameterizedTypeReference<>() {
-                });
-    }
-
     private ResponseEntity<List<ProdutoDTOResponse>> getProdutosList(String url) {
         var headers = getHeaders();
 
@@ -61,18 +49,18 @@ public class ProdutoControllerIntegracaoTest extends BaseAPIIntegracaoTest {
     @DisplayName("Espera uma página com 5 objetos e uma página de 5 objetos")
     public void findAllEsperaUmaPaginaCom5ObjetosEUmaPaginaDe5Objetos() { //O nome do método de teste é importante porque deve transmitir a essência do que ele verifica. Este não é um requisito técnico, mas sim uma oportunidade de capturar informações.
         // ACT
-        var page = getProdutosPageble("/api/v1/produtos").getBody();
+        var data = getProdutosList("/api/v1/produtos").getBody();
 
         // ASSERT (testa se retorna a quantidade de dados esperada)
-        assertNotNull(page);
-        assertEquals(5, page.stream().count());
+        assertNotNull(data);
+        assertEquals(5, data.size());
 
         // ACT - testa uma requisição com os parametrôs page e size
-        page = getProdutosPageble("/api/v1/produtos?page=0&size=5").getBody();
+        var dataPage = getProdutosList("/api/v1/produtos?page=0&size=5").getBody();
 
         // ASSERT (testa se retorna o tamanho de página solicitado)
-        assertNotNull(page);
-        assertEquals(5, page.stream().count());
+        assertNotNull(dataPage);
+        assertEquals(5, dataPage.size());
     }
 
     @Test //Esta anotação JUnit sinaliza que este método é um caso de teste

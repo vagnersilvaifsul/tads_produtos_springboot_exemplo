@@ -45,7 +45,7 @@ public class ProdutoController {
     public ResponseEntity<List<Produto>> findByNome(@PathVariable String nome) {
         var produtos = repository.findByNome(nome + "%");
         if (produtos.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(produtos);
     }
