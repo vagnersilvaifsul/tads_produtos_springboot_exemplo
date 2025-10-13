@@ -54,7 +54,7 @@ public class TratadorDeExcecoes {
 
     @ExceptionHandler({BadCredentialsException.class, AuthenticationException.class})
     public ResponseEntity<ErroPadrao> handleAuth(RuntimeException ex, WebRequest request) {
-        return build(HttpStatus.UNAUTHORIZED, "Credenciais inválidas", ex.getMessage(), request);
+        return build(HttpStatus.FORBIDDEN, "Credenciais inválidas", ex.getMessage(), request);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
