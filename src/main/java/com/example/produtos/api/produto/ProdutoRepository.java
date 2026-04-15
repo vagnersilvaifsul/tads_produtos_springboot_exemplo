@@ -22,7 +22,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
      */
 
     //Método em Domain Speak (só pelo nome do método o Spring Data irá injetar o SQL em tempo de execução)
-    Optional<List<Produto>> findByNome(String nome);
+    Optional<List<Produto>> findByNomeStartingWith(String nome);
 
     //Método em Query Speak (em JPQL). Note o nome da entidade Produto no JPQL, isso mostra que ele roda no objeto JPA.
     @Query("SELECT p FROM Produto p WHERE p.nome LIKE :nome%")
