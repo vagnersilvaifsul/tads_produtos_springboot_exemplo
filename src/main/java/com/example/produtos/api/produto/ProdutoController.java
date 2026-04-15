@@ -43,7 +43,7 @@ public class ProdutoController {
 
     @GetMapping("nome/{nome}")
     public ResponseEntity<List<Produto>> findByNome(@PathVariable String nome) {
-        var produtos = repository.findByNome(nome + "%");
+        var produtos = repository.findByNomeStartingWith(nome + "%");
         if (produtos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
