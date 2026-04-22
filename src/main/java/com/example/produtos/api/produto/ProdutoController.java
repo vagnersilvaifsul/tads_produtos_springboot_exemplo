@@ -44,10 +44,11 @@ public class ProdutoController {
     @GetMapping("nome/{nome}")
     public ResponseEntity<List<Produto>> findByNome(@PathVariable String nome) {
         var produtos = repository.findByNomeStartingWith(nome);
-        if (produtos.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        if (produtos.isPresent() && !produtos.get().isEmpty()) {
+            return ResponseEntity.ok(produtos.get());
         }
-        return ResponseEntity.ok(produtos.get());
+        return ResponseEntity.noContent().build();
+
     }
 
     @PostMapping
